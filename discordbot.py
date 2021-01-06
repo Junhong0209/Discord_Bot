@@ -2,7 +2,7 @@ import discord
 import openpyxl
 import asyncio
 
-token = "my Bot token
+token = "my Bot token"
 
 client = discord.Client()
 
