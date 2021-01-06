@@ -2,6 +2,8 @@ import discord
 import openpyxl
 import asyncio
 
+token = "my Bot token
+
 client = discord.Client()
 
 @client.event
@@ -55,4 +57,4 @@ async def on_message(message):
     if message.content == "안녕하살법!":
         await message.channel.send("안녕하살법 받아치기!")
 
-client.run("NzkzMDg1OTUyMjU0ODAzOTg4.X-nI2Q.CkLTYVLOLs1KUyg8uRpTxUUiScg")
+client.run("token")
