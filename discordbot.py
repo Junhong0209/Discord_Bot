@@ -1,17 +1,11 @@
 import discord
 import asyncio
-import bs4
-import urllib
-import re
-from Dtime import Uptime
 from discord.ext import commands
 
 token = "your bot token"
 
 app = commands.Bot(command_prefix='!')
 client = discord.Client()
-Uptime.uptimeset()
-
 
 @app.event
 async def on_ready():
