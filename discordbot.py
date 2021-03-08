@@ -1,11 +1,14 @@
 import discord
 import asyncio
+import requests
 from discord.ext import commands
+from bs4 import BeautifulSoup
 
-token = "your bot token"
+token = "NzkzMDg1OTUyMjU0ODAzOTg4.X-nI2Q.QsGUVKfupP8VnHxBfxZ-4IdAEzw"
 
 app = commands.Bot(command_prefix='!')
 client = discord.Client()
+Color = 0x2EFEF7
 
 @app.event
 async def on_ready():
@@ -31,28 +34,39 @@ async def on_ready():
         await app.change_presence(status=discord.Status.online, activity=game)
         await asyncio.sleep(3)
 
-#################### 명령어 ####################
+#################### 도움말 명령어 ####################
 
 @app.command()
 async def 도움말(ctx):
-    embed = discord.Embed(title="명령어 모음", description="", colour=0xFD02D2)
+    embed = discord.Embed(title="명령어 모음", description="", colour=Color)
     embed.add_field(name="!안녕", value="봇이 인사를 함", inline=False)
     embed.add_field(name="!빡추 [이름]", value="들어간 이름이 빡추 스탯을 쌓음", inline=False)
     embed.add_field(name="!초대링크", value="봇 초대 링크를 보내줌", inline=False)
-    embed.add_field(name="!뎅구", value="음.... 입력하면 뭐라고 할까....? 궁금하면 직접 해봐 ㅎ", inline=False)
+    embed.add_field(name="!핲스도움말", value="하이퍼 스케이프 전적 검색에 사용되는 명령어를 알려준다.", inline=False)
     embed.add_field(name="!씹덕 [이름]", value="말 그대로 씹덕.....", inline=False)
-    embed.add_field(name="!에코 [아무말]", value="봇이 똑같이 말함", inline=False)
-    embed.add_field(name="!제작자", value="제작자의 정보를 알려줌", inline=False)
+    embed.set_footer(text="제작자: 빨강고양이")
     await ctx.send(embed=embed)
+
+@app.command(aliases=['핲스 도움말', '핲스도움말'])
+async def HyperScape_help(ctx):
+    embed = discord.Embed(title="명령어 사용방법!", color=0x9ed7d0)
+    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+    embed.add_field(name="PC용 킬뎃 확인", value="!pc [닉네임]", inline=True)
+    embed.add_field(name="PS4용 킬뎃 확인", value="!ps4 [닉네임]", inline=True)
+    embed.add_field(name="XBOX용 킬뎃 확인", value="!xbox [닉네임]", inline=True)
+    embed.set_footer(text='serviced by hyper scape korea', icon_url='https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684')
+    await ctx.send(embed=embed)
+
+#################### 명령어들 ####################
 
 @app.command()
 async def 제작자(ctx): # 자신의 정보를 넣으면 된다.
-    embed = discord.Embed(title="제작자 정보", color=0xFD02D2)
-    embed.add_field(name="Discord", value="자신의 디스코드 태그", inline=False)
-    embed.add_field(name="GitHub", value="[제작자의 GitHub](자신의 깃 허브 링크)", inline=False)
-    embed.add_field(name="Facebook", value="[제작자의 Facebook](자신의 페이스북 링크)", inline=False)
-    embed.add_field(name="Instargram", value="[제작자의 Instargram](자신의 인스타그램 링크)", inline=False)
-    embed.add_field(name="Blog", value="[제작자의 Blog](자신의 블로그 링크)", inline=False)
+    embed = discord.Embed(title="제작자 정보", color=Color)
+    embed.add_field(name="Discord", value="빨강고양이#5278", inline=False)
+    embed.add_field(name="GitHub", value="[제작자의 GitHub](https://github.com/Junhong0209)", inline=False)
+    embed.add_field(name="Facebook", value="[제작자의 Facebook](https://www.facebook.com/Junhong04/)", inline=False)
+    embed.add_field(name="Instargram", value="[제작자의 Instargram](https://www.instagram.com/junhong936/)", inline=False)
+    embed.add_field(name="Blog", value="[제작자의 Blog](https://junhong0209.github.io)", inline=False)
     await ctx.send(embed=embed)
 
 @app.command(aliases=['안녕', '안녕하세요', 'ㅎㅇ'])
@@ -61,14 +75,16 @@ async def Hello(ctx):
 
 @app.command()
 async def 초대링크(ctx):
-    embed = discord.Embed(title="봇 초대 링크", description="", color=0xFD02D2)
-    embed.add_field(name="이 봇을 다른 서버에 초대하기 위한 링크입니다.", value="[봇 초대하기](이 곳에 자신이 만든 봇의 초대 링크를 넣으면 된다.)", inline=False)
+    embed = discord.Embed(title="봇 초대 링크", description="", color=Color)
+    embed.add_field(name="이 봇을 다른 서버에 초대하기 위한 링크입니다.", value="[봇 초대하기](https://discord.com/api/oauth2/authorize?client_id=793085952254803988&permissions=8&scope=bot)", inline=False)
     await ctx.send(embed=embed)
 
 @app.command()
 async def 빡추(ctx, *, text=None):
     if (text == None): # !빡추 명령어 뒤에 아무것도 입력 하지 않은 경우
         await ctx.send("누구를 입력하신거죠? 전 입력 받은게 없습니다만?")
+    elif (text == "아서"):
+        await ctx.send("나 빡추 아닌데?")
     else:
         await ctx.send("보셨나요? " + text + "의 빡추 스탯쌓기!!")
         print(text)
@@ -77,16 +93,276 @@ async def 빡추(ctx, *, text=None):
 async def 씹덕(ctx, text=None):
     if (text == None): # !씹덕 명령어 뒤에 아무것도 입력 하지 않은 경우
         await ctx.send("누구를 입력하신거죠? 전 입력 받은게 없습니다만?")
+    elif (text == "아서"):
+        await ctx.send("나 씹덕 아닌데?")
     else:
         await ctx.send("아, " + text + " 그 씹덕 샛기?")
         print(text)
 
-@app.command()
-async def 에코(ctx, *, content: str): # 이 기능은 자신이 한 말을 봇이 똑같이 다시 말하는 명령어이다.
-    await ctx.send(content)
+#################### 핲스 전적 검색 명령어 ####################
 
 @app.command()
-async def 안녕하살법(ctx):
-    await ctx.send("안녕하살법 받아치기~!")
+async def pc(ctx, *, playerNikname):
+    webpage = requests.get('https://tracker.gg/hyper-scape/profile/uplay/' + playerNikname + '/overview')
+    html = webpage.text
+    soup = BeautifulSoup(html, 'html.parser')
+
+    try:
+        error = soup.find('h1').get_text()
+    except AttributeError as e:
+        error = 'none'
+
+    # if (playerNikname == 'Red_cat2020'):
+    #     embed = discord.Embed(title="개발자의 전적은 비밀입니다 ㅎㅎ", description="made by Red_cat2020", color=0xff0000)
+    #     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+    #     embed.add_field(name="플레이어 정보를 찾지 못함", value="닉네임 오류!", inline=True)
+    #     embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
+
+    if (error == '404'):
+        embed = discord.Embed(title="error", description="made by Red_cat2020", color=0xff0000)
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+        embed.add_field(name="플레이어 정보를 찾지 못함", value="명령어, 닉네임이 정확한지 다시 한번 확인해주세요", inline=True)
+        embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
+
+    else:
+        for x in range(0, 16):
+            if x == 0:
+                kda = soup.select(".value")[x].get_text()
+            elif x == 1:
+                wins = soup.select(".value")[x].get_text()
+            elif x == 2:
+                winper = soup.select(".value")[x].get_text()
+            elif x == 3:
+                avgservivaltime = soup.select(".value")[x].get_text()
+            elif x == 4:
+                crownper = soup.select(".value")[x].get_text()
+            elif x == 5:
+                crownwins = soup.select(".value")[x].get_text()
+            elif x == 6:
+                kills = soup.select(".value")[x].get_text()
+            elif x == 7:
+                assists = soup.select(".value")[x].get_text()
+            elif x == 8:
+                chests = soup.select(".value")[x].get_text()
+            elif x == 9:
+                fusions = soup.select(".value")[x].get_text()
+            elif x == 10:
+                revives = soup.select(".value")[x].get_text()
+            elif x == 11:
+                crownpickup = soup.select(".value")[x].get_text()
+            elif x == 12:
+                damagedone = soup.select(".value")[x].get_text()
+            elif x == 13:
+                headshotper = soup.select(".value")[x].get_text()
+            elif x == 14:
+                killgame = soup.select(".value")[x].get_text()
+            elif x == 15:
+                killmin = soup.select(".value")[x].get_text()
+        playtime = soup.find('span', {'class': 'playtime'}).get_text()
+        playtime = playtime[11:-19]
+        matches = soup.find('span', {'class': 'matches'}).get_text()
+        matches = matches[11:-17]
+        rank = soup.select(".rank")[0].get_text()
+        rank = rank[19:]
+
+        embed = discord.Embed(title=playerNikname + "님의 전적 (PC)", description="made by Red_cat2020", color=0x9ed7d0)
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+        embed.add_field(name="플레이타임", value=playtime, inline=True)
+        embed.add_field(name="게임 수", value=matches + '게임', inline=True)
+        embed.add_field(name="K/d", value=kda, inline=True)
+        embed.add_field(name="승리", value=wins + '게임', inline=True)
+        embed.add_field(name="승리 비율", value=winper, inline=True)
+        embed.add_field(name="평균 생존 시간", value=avgservivaltime, inline=True)
+        embed.add_field(name="왕관 획득", value=crownper + '%', inline=True)
+        embed.add_field(name="왕관으로 이긴 게임", value=crownwins + '게임', inline=True)
+        embed.add_field(name="킬", value=kills + '킬', inline=True)
+        embed.add_field(name="어시스트", value=assists, inline=True)
+        embed.add_field(name="파괴한 보급품", value=chests + '개', inline=True)
+        embed.add_field(name="합성된 아이템 수", value=fusions + '개', inline=True)
+        embed.add_field(name="부활", value=revives + '회', inline=True)
+        embed.add_field(name="왕관 획득 수", value=crownpickup + '번', inline=True)
+        embed.add_field(name="총합 데미지", value=damagedone, inline=True)
+        embed.add_field(name="헤드샷 비율", value=headshotper, inline=True)
+        embed.add_field(name="게임당 킬수", value=killgame + '킬', inline=True)
+        embed.add_field(name="분당 킬수", value=killmin + '킬', inline=True)
+        embed.set_footer(text="serviced by hyper scape korea",
+                         icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
+    await ctx.send(embed=embed)
+    print(playerNikname)
+
+@app.command()
+async def ps4(ctx, *, playerNikname):
+    webpage = requests.get('https://tracker.gg/hyper-scape/profile/psn/' + playerNikname + '/overview')
+    html = webpage.text
+    soup = BeautifulSoup(html, 'html.parser')
+
+    try:
+        error = soup.find('h1').get_text()
+    except AttributeError as e:
+        error = 'none'
+
+    # if (playerNikname == 'Red_cat2020'):
+    #     embed = discord.Embed(title="개발자의 전적은 비밀입니다 ㅎㅎ", description="made by Red_cat2020", color=0xff0000)
+    #     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+    #     embed.add_field(name="플레이어 정보를 찾지 못함!ps4 a", value="닉네임 오류!", inline=True)
+    #     embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
+
+    if (error == '404'):
+        print('Error!')
+        embed = discord.Embed(title="error", description="made by Red_cat2020", color=0xff0000)
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+        embed.add_field(name="플레이어 정보를 찾지 못함", value="명령어, 닉네임이 정확한지 다시 한번 확인해주세요", inline=True)
+        embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")\
+
+    else:
+        for x in range(0, 16):
+            if x == 0:
+                kda = soup.select(".value")[x].get_text()
+            elif x == 1:
+                wins = soup.select(".value")[x].get_text()
+            elif x == 2:
+                winper = soup.select(".value")[x].get_text()
+            elif x == 3:
+                avgservivaltime = soup.select(".value")[x].get_text()
+            elif x == 4:
+                crownper = soup.select(".value")[x].get_text()
+            elif x == 5:
+                crownwins = soup.select(".value")[x].get_text()
+            elif x == 6:
+                kills = soup.select(".value")[x].get_text()
+            elif x == 7:
+                assists = soup.select(".value")[x].get_text()
+            elif x == 8:
+                chests = soup.select(".value")[x].get_text()
+            elif x == 9:
+                fusions = soup.select(".value")[x].get_text()
+            elif x == 10:
+                revives = soup.select(".value")[x].get_text()
+            elif x == 11:
+                crownpickup = soup.select(".value")[x].get_text()
+            elif x == 12:
+                damagedone = soup.select(".value")[x].get_text()
+            elif x == 13:
+                headshotper = soup.select(".value")[x].get_text()
+            elif x == 14:
+                killgame = soup.select(".value")[x].get_text()
+            elif x == 15:
+                killmin = soup.select(".value")[x].get_text()
+        playtime = soup.find('span', {'class': 'playtime'}).get_text()
+        playtime = playtime[11:-19]
+        matches = soup.find('span', {'class': 'matches'}).get_text()
+        matches = matches[11:-17]
+
+        embed = discord.Embed(title=playerNikname + "님의 전적 (PS4)", description="made by Red_cat2020",
+                              color=0x9ed7d0)
+        embed.set_thumbnail(
+            url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+        embed.add_field(name="플레이타임", value=playtime, inline=True)
+        embed.add_field(name="게임 수", value=matches + '게임', inline=True)
+        embed.add_field(name="K/d", value=kda, inline=True)
+        embed.add_field(name="승리", value=wins + '게임', inline=True)
+        embed.add_field(name="승리 비율", value=winper, inline=True)
+        embed.add_field(name="평균 생존 시간", value=avgservivaltime, inline=True)
+        embed.add_field(name="왕관 획득", value=crownper + '%', inline=True)
+        embed.add_field(name="왕관으로 이긴 게임", value=crownwins + '게임', inline=True)
+        embed.add_field(name="킬", value=kills + '킬', inline=True)
+        embed.add_field(name="어시스트", value=assists, inline=True)
+        embed.add_field(name="파괴한 보급품", value=chests + '개', inline=True)
+        embed.add_field(name="합성된 아이템 수", value=fusions + '개', inline=True)
+        embed.add_field(name="부활", value=revives + '회', inline=True)
+        embed.add_field(name="왕관 획득 수", value=crownpickup + '번', inline=True)
+        embed.add_field(name="총합 데미지", value=damagedone, inline=True)
+        embed.add_field(name="헤드샷 비율", value=headshotper, inline=True)
+        embed.add_field(name="게임당 킬수", value=killgame + '킬', inline=True)
+        embed.add_field(name="분당 킬수", value=killmin + '킬', inline=True)
+        embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
+    await ctx.send(embed=embed)
+    print(playerNikname)
+
+@app.command()
+async def xbox(ctx, *, playerNikname):
+    webpage = requests.get('https://tracker.gg/hyper-scape/profile/xbl/' + playerNikname + '/overview')
+    html = webpage.text
+    soup = BeautifulSoup(html, 'html.parser')
+
+    try:
+        error = soup.find('h1').get_text()
+    except AttributeError as e:
+        error = 'none'
+
+    # if (playerNikname == 'Red_cat2020'):
+    #     embed = discord.Embed(title="개발자의 전적은 비밀입니다 ㅎㅎ", description="made by Red_cat2020", color=0xff0000)
+    #     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+    #     embed.add_field(name="플레이어 정보를 찾지 못함", value="닉네임 오류!", inline=True)
+    #     embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
+
+    if (error == '404'):
+        embed = discord.Embed(title="error", description="made by Red_cat2020", color=0xff0000)
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+        embed.add_field(name="플레이어 정보를 찾지 못함", value="명령어, 닉네임이 정확한지 다시 한번 확인해주세요", inline=True)
+        embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
+
+    else:
+        for x in range(0, 16):
+            if x == 0:
+                kda = soup.select(".value")[x].get_text()
+            elif x == 1:
+                wins = soup.select(".value")[x].get_text()
+            elif x == 2:
+                winper = soup.select(".value")[x].get_text()
+            elif x == 3:
+                avgservivaltime = soup.select(".value")[x].get_text()
+            elif x == 4:
+                crownper = soup.select(".value")[x].get_text()
+            elif x == 5:
+                crownwins = soup.select(".value")[x].get_text()
+            elif x == 6:
+                kills = soup.select(".value")[x].get_text()
+            elif x == 7:
+                assists = soup.select(".value")[x].get_text()
+            elif x == 8:
+                chests = soup.select(".value")[x].get_text()
+            elif x == 9:
+                fusions = soup.select(".value")[x].get_text()
+            elif x == 10:
+                revives = soup.select(".value")[x].get_text()
+            elif x == 11:
+                crownpickup = soup.select(".value")[x].get_text()
+            elif x == 12:
+                damagedone = soup.select(".value")[x].get_text()
+            elif x == 13:
+                headshotper = soup.select(".value")[x].get_text()
+            elif x == 14:
+                killgame = soup.select(".value")[x].get_text()
+            elif x == 15:
+                killmin = soup.select(".value")[x].get_text()
+        playtime = soup.find('span', {'class': 'playtime'}).get_text()
+        playtime = playtime[11:-19]
+        matches = soup.find('span', {'class': 'matches'}).get_text()
+        matches = matches[11:-17]
+
+        embed = discord.Embed(title=playerNikname + "님의 전적 (XBOX)", description="made by Red_cat2020", color=0x9ed7d0)
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+        embed.add_field(name="플레이타임", value=playtime, inline=True)
+        embed.add_field(name="게임 수", value=matches + '게임', inline=True)
+        embed.add_field(name="K/d", value=kda, inline=True)
+        embed.add_field(name="승리", value=wins + '게임', inline=True)
+        embed.add_field(name="승리 비율", value=winper, inline=True)
+        embed.add_field(name="평균 생존 시간", value=avgservivaltime, inline=True)
+        embed.add_field(name="왕관 획득", value=crownper + '%', inline=True)
+        embed.add_field(name="왕관으로 이긴 게임", value=crownwins + '게임', inline=True)
+        embed.add_field(name="킬", value=kills + '킬', inline=True)
+        embed.add_field(name="어시스트", value=assists, inline=True)
+        embed.add_field(name="파괴한 보급품", value=chests + '개', inline=True)
+        embed.add_field(name="합성된 아이템 수", value=fusions + '개', inline=True)
+        embed.add_field(name="부활", value=revives + '회', inline=True)
+        embed.add_field(name="왕관 획득 수", value=crownpickup + '번', inline=True)
+        embed.add_field(name="총합 데미지", value=damagedone, inline=True)
+        embed.add_field(name="헤드샷 비율", value=headshotper, inline=True)
+        embed.add_field(name="게임당 킬수", value=killgame + '킬', inline=True)
+        embed.add_field(name="분당 킬수", value=killmin + '킬', inline=True)
+        embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
+    await ctx.send(embed=embed)
+    print(playerNikname)
 
 app.run(token)
