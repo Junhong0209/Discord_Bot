@@ -12,8 +12,8 @@ Color = 0x2EFEF7 # 이 봇의 기본 색상
 
 @app.event
 async def on_ready():
-    print('Loggend-in Bot: ', app.user.name)
-    print('Bot id: ', app.user.id)
+    print('Loggend-in Bot:', app.user.name)
+    print('Bot id:', app.user.id)
     print('connection was succesful')
     print('=' * 30)
     await app.change_presence(status=discord.Status.offline)
