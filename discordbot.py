@@ -42,20 +42,26 @@ async def 도움말(ctx):
     embed.add_field(name="!안녕", value="봇이 인사를 함", inline=False)
     embed.add_field(name="!빡추 [이름]", value="들어간 이름이 빡추 스탯을 쌓음", inline=False)
     embed.add_field(name="!초대링크", value="봇 초대 링크를 보내줌", inline=False)
-    embed.add_field(name="!핲스도움말", value="하이퍼 스케이프 전적 검색에 사용되는 명령어를 알려준다.", inline=False)
+    embed.add_field(name="!핲스 도움말", value="하이퍼 스케이프 전적 검색에 사용되는 명령어를 알려준다.", inline=False)
     embed.add_field(name="!씹덕 [이름]", value="말 그대로 씹덕.....", inline=False)
     embed.set_footer(text="제작자: 빨강고양이")
     await ctx.send(embed=embed)
 
-@app.command(aliases=['핲스 도움말', '핲스도움말'])
-async def HyperScape_help(ctx):
-    embed = discord.Embed(title="명령어 사용방법!", color=0x9ed7d0)
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
-    embed.add_field(name="PC용 킬뎃 확인", value="!pc [닉네임]", inline=True)
-    embed.add_field(name="PS4용 킬뎃 확인", value="!ps4 [닉네임]", inline=True)
-    embed.add_field(name="XBOX용 킬뎃 확인", value="!xbox [닉네임]", inline=True)
-    embed.set_footer(text='serviced by hyper scape korea', icon_url='https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684')
-    await ctx.send(embed=embed)
+@app.command(aliases=['핲스'])
+async def HyperScape_help(ctx, *, text):
+    if text == '도움말':
+        embed = discord.Embed(title="명령어 사용방법!", color=0x9ed7d0)
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+        embed.add_field(name="PC용 킬뎃 확인", value="!pc [닉네임]", inline=True)
+        embed.add_field(name="PS4용 킬뎃 확인", value="!ps4 [닉네임]", inline=True)
+        embed.add_field(name="XBOX용 킬뎃 확인", value="!xbox [닉네임]", inline=True)
+        embed.set_footer(text='serviced by hyper scape korea', icon_url='https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684')
+        await ctx.send(embed=embed)
+    else :
+        embed = discord.Embed(title="Error!", color=0xff0000)
+        embed.add_field(name="저에겐 그런 명령어가 없습니다.", value="명령어를 제대로 입력하였는지 확인해 주십시요.")
+        embed.set_footer(text='serviced by hyper scape korea', icon_url='https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684')
+        await ctx.send(embed=embed)
 
 #################### 명령어들 ####################
 
