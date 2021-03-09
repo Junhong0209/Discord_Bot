@@ -8,7 +8,7 @@ token = "NzkzMDg1OTUyMjU0ODAzOTg4.X-nI2Q.QsGUVKfupP8VnHxBfxZ-4IdAEzw"
 
 app = commands.Bot(command_prefix='!')
 client = discord.Client()
-Color = 0x2EFEF7
+Color = 0x2EFEF7 # 이 봇의 기본 색상
 
 @app.event
 async def on_ready():
