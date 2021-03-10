@@ -7,8 +7,14 @@ from bs4 import BeautifulSoup
 token = "NzkzMDg1OTUyMjU0ODAzOTg4.X-nI2Q.QsGUVKfupP8VnHxBfxZ-4IdAEzw"
 
 app = commands.Bot(command_prefix='!')
-client = discord.Client()
-Color = 0x2EFEF7 # 이 봇의 기본 색상
+
+#################### 임베드 색상 ####################
+
+Color = 0x2EFEF7 # 이 봇의 기본 임베드 색상
+HyperScape_Color = 0x9ed7d0 # 핲스 전적 검색 임베드 색상
+Error_Color = 0xff0000 # 명령어 및 오류가 떴을때 사용하는 임베드 색상
+
+#################### 봇이 켜젔을 때 실행되는 것 ####################
 
 @app.event
 async def on_ready():
@@ -44,13 +50,13 @@ async def 도움말(ctx):
     embed.add_field(name="!초대링크", value="봇 초대 링크를 보내줌", inline=False)
     embed.add_field(name="!핲스 도움말", value="하이퍼 스케이프 전적 검색에 사용되는 명령어를 알려준다.", inline=False)
     embed.add_field(name="!씹덕 [이름]", value="말 그대로 씹덕.....", inline=False)
-    embed.set_footer(text="제작자: 빨강고양이")
+    embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
     await ctx.send(embed=embed)
 
 @app.command(aliases=['핲스'])
 async def HyperScape_help(ctx, *, text):
     if text == '도움말':
-        embed = discord.Embed(title="명령어 사용방법!", color=0x9ed7d0)
+        embed = discord.Embed(title="명령어 사용방법!", color=HyperScape_Color)
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
         embed.add_field(name="PC용 킬뎃 확인", value="!pc [닉네임]", inline=True)
         embed.add_field(name="PS4용 킬뎃 확인", value="!ps4 [닉네임]", inline=True)
@@ -58,7 +64,7 @@ async def HyperScape_help(ctx, *, text):
         embed.set_footer(text='serviced by hyper scape korea', icon_url='https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684')
         await ctx.send(embed=embed)
     else :
-        embed = discord.Embed(title="Error!", color=0xff0000)
+        embed = discord.Embed(title="Error!", color=Error_Color)
         embed.add_field(name="저에겐 그런 명령어가 없습니다.", value="명령어를 제대로 입력하였는지 확인해 주십시요.")
         embed.set_footer(text='serviced by hyper scape korea', icon_url='https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684')
         await ctx.send(embed=embed)
@@ -73,6 +79,7 @@ async def 제작자(ctx): # 자신의 정보를 넣으면 된다.
     embed.add_field(name="Facebook", value="[제작자의 Facebook](https://www.facebook.com/Junhong04/)", inline=False)
     embed.add_field(name="Instargram", value="[제작자의 Instargram](https://www.instagram.com/junhong936/)", inline=False)
     embed.add_field(name="Blog", value="[제작자의 Blog](https://junhong0209.github.io)", inline=False)
+    embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
     await ctx.send(embed=embed)
 
 @app.command(aliases=['안녕', '안녕하세요', 'ㅎㅇ'])
@@ -119,13 +126,13 @@ async def pc(ctx, *, playerNikname):
         error = 'none'
 
     # if (playerNikname == 'Red_cat2020'):
-    #     embed = discord.Embed(title="개발자의 전적은 비밀입니다 ㅎㅎ", description="made by Red_cat2020", color=0xff0000)
+    #     embed = discord.Embed(title="개발자의 전적은 비밀입니다 ㅎㅎ", description="made by 빨강고양이", color=Error_Color)
     #     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
     #     embed.add_field(name="플레이어 정보를 찾지 못함", value="닉네임 오류!", inline=True)
     #     embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
 
     if (error == '404'):
-        embed = discord.Embed(title="error", description="made by Red_cat2020", color=0xff0000)
+        embed = discord.Embed(title="error", description="made by 빨강고양이", color=Error_Color)
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
         embed.add_field(name="플레이어 정보를 찾지 못함", value="명령어, 닉네임이 정확한지 다시 한번 확인해주세요", inline=True)
         embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
@@ -171,7 +178,7 @@ async def pc(ctx, *, playerNikname):
         rank = soup.select(".rank")[0].get_text()
         rank = rank[19:]
 
-        embed = discord.Embed(title=playerNikname + "님의 전적 (PC)", description="made by Red_cat2020", color=0x9ed7d0)
+        embed = discord.Embed(title=playerNikname + "님의 전적 (PC)", description="made by 빨강고양이", color=HyperScape_Color)
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
         embed.add_field(name="플레이타임", value=playtime, inline=True)
         embed.add_field(name="게임 수", value=matches + '게임', inline=True)
@@ -191,8 +198,7 @@ async def pc(ctx, *, playerNikname):
         embed.add_field(name="헤드샷 비율", value=headshotper, inline=True)
         embed.add_field(name="게임당 킬수", value=killgame + '킬', inline=True)
         embed.add_field(name="분당 킬수", value=killmin + '킬', inline=True)
-        embed.set_footer(text="serviced by hyper scape korea",
-                         icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
+        embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
     await ctx.send(embed=embed)
     print(playerNikname)
 
@@ -208,14 +214,14 @@ async def ps4(ctx, *, playerNikname):
         error = 'none'
 
     # if (playerNikname == 'Red_cat2020'):
-    #     embed = discord.Embed(title="개발자의 전적은 비밀입니다 ㅎㅎ", description="made by Red_cat2020", color=0xff0000)
+    #     embed = discord.Embed(title="개발자의 전적은 비밀입니다 ㅎㅎ", description="made by 빨강고양이", color=Error_Color)
     #     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
     #     embed.add_field(name="플레이어 정보를 찾지 못함!ps4 a", value="닉네임 오류!", inline=True)
     #     embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
 
     if (error == '404'):
         print('Error!')
-        embed = discord.Embed(title="error", description="made by Red_cat2020", color=0xff0000)
+        embed = discord.Embed(title="error", description="made by 빨강고양이", color=Error_Color)
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
         embed.add_field(name="플레이어 정보를 찾지 못함", value="명령어, 닉네임이 정확한지 다시 한번 확인해주세요", inline=True)
         embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")\
@@ -259,10 +265,8 @@ async def ps4(ctx, *, playerNikname):
         matches = soup.find('span', {'class': 'matches'}).get_text()
         matches = matches[11:-17]
 
-        embed = discord.Embed(title=playerNikname + "님의 전적 (PS4)", description="made by Red_cat2020",
-                              color=0x9ed7d0)
-        embed.set_thumbnail(
-            url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+        embed = discord.Embed(title=playerNikname + "님의 전적 (PS4)", description="made by 빨강고양이", color=HyperScape_Color)
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
         embed.add_field(name="플레이타임", value=playtime, inline=True)
         embed.add_field(name="게임 수", value=matches + '게임', inline=True)
         embed.add_field(name="K/d", value=kda, inline=True)
@@ -297,13 +301,13 @@ async def xbox(ctx, *, playerNikname):
         error = 'none'
 
     # if (playerNikname == 'Red_cat2020'):
-    #     embed = discord.Embed(title="개발자의 전적은 비밀입니다 ㅎㅎ", description="made by Red_cat2020", color=0xff0000)
+    #     embed = discord.Embed(title="개발자의 전적은 비밀입니다 ㅎㅎ", description="made by 빨강고양이", color=Error_Color)
     #     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
     #     embed.add_field(name="플레이어 정보를 찾지 못함", value="닉네임 오류!", inline=True)
     #     embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
 
     if (error == '404'):
-        embed = discord.Embed(title="error", description="made by Red_cat2020", color=0xff0000)
+        embed = discord.Embed(title="error", description="made by 빨강고양이", color=Error_Color)
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
         embed.add_field(name="플레이어 정보를 찾지 못함", value="명령어, 닉네임이 정확한지 다시 한번 확인해주세요", inline=True)
         embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
@@ -347,7 +351,7 @@ async def xbox(ctx, *, playerNikname):
         matches = soup.find('span', {'class': 'matches'}).get_text()
         matches = matches[11:-17]
 
-        embed = discord.Embed(title=playerNikname + "님의 전적 (XBOX)", description="made by Red_cat2020", color=0x9ed7d0)
+        embed = discord.Embed(title=playerNikname + "님의 전적 (XBOX)", description="made by 빨강고양이", color=HyperScape_Color)
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
         embed.add_field(name="플레이타임", value=playtime, inline=True)
         embed.add_field(name="게임 수", value=matches + '게임', inline=True)
