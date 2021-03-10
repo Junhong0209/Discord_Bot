@@ -10,9 +10,9 @@ app = commands.Bot(command_prefix='!')
 
 #################### 임베드 색상 ####################
 
-Color = 0x2EFEF7 # 이 봇의 기본 임베드 색상
-HyperScape_Color = 0x9ed7d0 # 핲스 전적 검색 임베드 색상
-Error_Color = 0xff0000 # 명령어 및 오류가 떴을때 사용하는 임베드 색상
+Color = 0x2EFEF7                # 이 봇의 기본 임베드 색상
+HyperScape_Color = 0x9ed7d0     # 핲스 전적 검색 임베드 색상
+Error_Color = 0xff0000          # 명령어 및 오류 임베드 색상
 
 #################### 봇이 켜젔을 때 실행되는 것 ####################
 
@@ -65,7 +65,7 @@ async def HyperScape_help(ctx, *, text):
         await ctx.send(embed=embed)
     else :
         embed = discord.Embed(title="Error!", color=Error_Color)
-        embed.add_field(name="저에겐 그런 명령어가 없습니다.", value="명령어를 제대로 입력하였는지 확인해 주십시요.")
+        embed.add_field(name="명령어를 찾지 못했습니다.", value="명령어를 제대로 입력하였는지 확인해 주십시요.")
         embed.set_footer(text='serviced by hyper scape korea', icon_url='https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684')
         await ctx.send(embed=embed)
 
@@ -115,8 +115,8 @@ async def 씹덕(ctx, text=None):
 #################### 핲스 전적 검색 명령어 ####################
 
 @app.command()
-async def pc(ctx, *, playerNikname):
-    webpage = requests.get('https://tracker.gg/hyper-scape/profile/uplay/' + playerNikname + '/overview')
+async def pc(ctx, *, playerNickname):
+    webpage = requests.get('https://tracker.gg/hyper-scape/profile/uplay/' + playerNickname + '/overview')
     html = webpage.text
     soup = BeautifulSoup(html, 'html.parser')
 
@@ -125,7 +125,7 @@ async def pc(ctx, *, playerNikname):
     except AttributeError as e:
         error = 'none'
 
-    # if (playerNikname == 'Red_cat2020'):
+    # if (playerNickname == 'Red_cat2020'):
     #     embed = discord.Embed(title="개발자의 전적은 비밀입니다 ㅎㅎ", description="made by 빨강고양이", color=Error_Color)
     #     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
     #     embed.add_field(name="플레이어 정보를 찾지 못함", value="닉네임 오류!", inline=True)
@@ -178,7 +178,7 @@ async def pc(ctx, *, playerNikname):
         rank = soup.select(".rank")[0].get_text()
         rank = rank[19:]
 
-        embed = discord.Embed(title=playerNikname + "님의 전적 (PC)", description="made by 빨강고양이", color=HyperScape_Color)
+        embed = discord.Embed(title=playerNickname + "님의 전적 (PC)", description="made by 빨강고양이", color=HyperScape_Color)
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
         embed.add_field(name="플레이타임", value=playtime, inline=True)
         embed.add_field(name="게임 수", value=matches + '게임', inline=True)
@@ -200,11 +200,11 @@ async def pc(ctx, *, playerNikname):
         embed.add_field(name="분당 킬수", value=killmin + '킬', inline=True)
         embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
     await ctx.send(embed=embed)
-    print(playerNikname)
+    print(playerNickname)
 
 @app.command()
-async def ps4(ctx, *, playerNikname):
-    webpage = requests.get('https://tracker.gg/hyper-scape/profile/psn/' + playerNikname + '/overview')
+async def ps4(ctx, *, playerNickname):
+    webpage = requests.get('https://tracker.gg/hyper-scape/profile/psn/' + playerNickname + '/overview')
     html = webpage.text
     soup = BeautifulSoup(html, 'html.parser')
 
@@ -213,7 +213,7 @@ async def ps4(ctx, *, playerNikname):
     except AttributeError as e:
         error = 'none'
 
-    # if (playerNikname == 'Red_cat2020'):
+    # if (playerNickname == 'Red_cat2020'):
     #     embed = discord.Embed(title="개발자의 전적은 비밀입니다 ㅎㅎ", description="made by 빨강고양이", color=Error_Color)
     #     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
     #     embed.add_field(name="플레이어 정보를 찾지 못함!ps4 a", value="닉네임 오류!", inline=True)
@@ -265,7 +265,7 @@ async def ps4(ctx, *, playerNikname):
         matches = soup.find('span', {'class': 'matches'}).get_text()
         matches = matches[11:-17]
 
-        embed = discord.Embed(title=playerNikname + "님의 전적 (PS4)", description="made by 빨강고양이", color=HyperScape_Color)
+        embed = discord.Embed(title=playerNickname + "님의 전적 (PS4)", description="made by 빨강고양이", color=HyperScape_Color)
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
         embed.add_field(name="플레이타임", value=playtime, inline=True)
         embed.add_field(name="게임 수", value=matches + '게임', inline=True)
@@ -287,11 +287,11 @@ async def ps4(ctx, *, playerNikname):
         embed.add_field(name="분당 킬수", value=killmin + '킬', inline=True)
         embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
     await ctx.send(embed=embed)
-    print(playerNikname)
+    print(playerNickname)
 
 @app.command()
-async def xbox(ctx, *, playerNikname):
-    webpage = requests.get('https://tracker.gg/hyper-scape/profile/xbl/' + playerNikname + '/overview')
+async def xbox(ctx, *, playerNickname):
+    webpage = requests.get('https://tracker.gg/hyper-scape/profile/xbl/' + playerNickname + '/overview')
     html = webpage.text
     soup = BeautifulSoup(html, 'html.parser')
 
@@ -300,7 +300,7 @@ async def xbox(ctx, *, playerNikname):
     except AttributeError as e:
         error = 'none'
 
-    # if (playerNikname == 'Red_cat2020'):
+    # if (playerNickname == 'Red_cat2020'):
     #     embed = discord.Embed(title="개발자의 전적은 비밀입니다 ㅎㅎ", description="made by 빨강고양이", color=Error_Color)
     #     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
     #     embed.add_field(name="플레이어 정보를 찾지 못함", value="닉네임 오류!", inline=True)
@@ -351,7 +351,7 @@ async def xbox(ctx, *, playerNikname):
         matches = soup.find('span', {'class': 'matches'}).get_text()
         matches = matches[11:-17]
 
-        embed = discord.Embed(title=playerNikname + "님의 전적 (XBOX)", description="made by 빨강고양이", color=HyperScape_Color)
+        embed = discord.Embed(title=playerNickname + "님의 전적 (XBOX)", description="made by 빨강고양이", color=HyperScape_Color)
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
         embed.add_field(name="플레이타임", value=playtime, inline=True)
         embed.add_field(name="게임 수", value=matches + '게임', inline=True)
@@ -373,6 +373,6 @@ async def xbox(ctx, *, playerNikname):
         embed.add_field(name="분당 킬수", value=killmin + '킬', inline=True)
         embed.set_footer(text="serviced by hyper scape korea", icon_url="https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684")
     await ctx.send(embed=embed)
-    print(playerNikname)
+    print(playerNickname)
 
 app.run(token)
