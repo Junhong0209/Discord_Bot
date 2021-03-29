@@ -99,7 +99,7 @@ async def 빡추(ctx, *, text=None):
     elif (text == "아서"):
         await ctx.send("나 빡추 아닌데?")
     else:
-        await ctx.send("보셨나요? " + text + "의 빡추 스탯쌓기!!")
+        await ctx.send("보셨나요? 보셨나요? 보셨냐구요!!!! " + text + "의 빡추 스탯쌓기!!")
         print(text)
 
 @app.command()
