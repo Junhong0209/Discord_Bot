@@ -96,7 +96,7 @@ async def 초대링크(ctx):
 async def 빡추(ctx, *, text=None):
     if (text == None): # !빡추 명령어 뒤에 아무것도 입력 하지 않은 경우
         await ctx.send("누구를 입력하신거죠? 전 입력 받은게 없습니다만?")
-    elif (text == "아서"):
+    elif (text == "아서"): # !빡추 명령어 뒤에 봇의 이름을 넣은 경우
         await ctx.send("나 빡추 아닌데?")
     else:
         await ctx.send("보셨나요? 보셨나요? 보셨냐구요!!!! " + text + "의 빡추 스탯쌓기!!")
@@ -106,7 +106,7 @@ async def 빡추(ctx, *, text=None):
 async def 씹덕(ctx, text=None):
     if (text == None): # !씹덕 명령어 뒤에 아무것도 입력 하지 않은 경우
         await ctx.send("누구를 입력하신거죠? 전 입력 받은게 없습니다만?")
-    elif (text == "아서"):
+    elif (text == "아서"): # !씹덕 명령어 뒤에 봇의 이름을 넣은 경우
         await ctx.send("나 씹덕 아닌데?")
     else:
         await ctx.send("아, " + text + " 그 씹덕 샛기?")
