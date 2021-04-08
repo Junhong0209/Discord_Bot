@@ -3,10 +3,13 @@ import asyncio
 import requests
 from discord.ext import commands
 from bs4 import BeautifulSoup
+from datetime import date
 
 token = "NzkzMDg1OTUyMjU0ODAzOTg4.X-nI2Q.QsGUVKfupP8VnHxBfxZ-4IdAEzw"
 
 app = commands.Bot(command_prefix='!')
+
+time = date.today().strftime('%y%m%d') # 시간이 필요한 경우 가져다 사용하면 된다. (출력 방식: yyyymmdd)
 
 #################### 임베드 색상 ####################
 
@@ -22,10 +25,10 @@ async def on_ready():
     print('Bot id:', app.user.id)
     print('connection was succesful')
     print('=' * 30)
-    await app.change_presence(status=discord.Status.offline)
+
     game = discord.Game('정신 차리기')
-    await app.change_presence(status=discord.Status.online, activity=game)
-    await asyncio.sleep(2)
+    await app.change_presence(status=discord.Status.offline, activity=game)
+    await asyncio.sleep(5)
     while True:
         game = discord.Game('빡추 스탯 쌓기')
         await app.change_presence(status=discord.Status.online, activity=game)
@@ -50,6 +53,7 @@ async def 도움말(ctx):
     embed.add_field(name="!초대링크", value="봇 초대 링크를 보내줌", inline=False)
     embed.add_field(name="!핲스 도움말", value="하이퍼 스케이프 전적 검색에 사용되는 명령어를 알려준다.", inline=False)
     embed.add_field(name="!씹덕 [이름]", value="말 그대로 씹덕.....", inline=False)
+    embed.add_field(name="!급식 도움말", value="급식과 관련된 도움말 알려줌", inline=False)
     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
     await ctx.send(embed=embed)
 
@@ -67,6 +71,20 @@ async def HyperScape_help(ctx, *, text):
         embed = discord.Embed(title="Error!", color=Error_Color)
         embed.add_field(name="명령어를 찾지 못했습니다.", value="명령어를 제대로 입력하였는지 확인해 주십시요.")
         embed.set_footer(text='serviced by hyper scape korea', icon_url='https://media.discordapp.net/attachments/708693776180314223/731835374619328619/HS.png?width=684&height=684')
+        await ctx.send(embed=embed)
+
+@app.command()
+async def 급식(ctx, *, help):
+    if help == '도움말':
+        embed = discord.Embed(title='급식 도움말', color=Color)
+        embed.add_field(name="!대소고 급식", value="대소고 하루 급식을 보여준다.", inline=False)
+        embed.add_field(name="!문화고 급식", value="문화고 하루 급식을 보여준다.", inline=False)
+        embed.add_field(name="!예일고 급식", value="예일고 하루 급식을 보여준다.", inline=False)
+        embed.add_field(name="!신라공고 급식", value="신라공고 하루 급식을 보여준다.", inline=False)
+        embed.add_field(name="!동성고 급식", value="동성고 하루 급식을 보여준다.", inline=False)
+        embed.add_field(name="!포철공고 급식", value="포철공고 하루 급식을 보여준다.", inline=False)
+        embed.add_field(name="![학교 이름] 급식", value="추후 다른 고등학교 추가 예정", inline=False)
+        embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
         await ctx.send(embed=embed)
 
 #################### 명령어들 ####################
@@ -89,14 +107,16 @@ async def Hello(ctx):
 @app.command()
 async def 초대링크(ctx):
     embed = discord.Embed(title="봇 초대 링크", description="", color=Color)
-    embed.add_field(name="이 봇을 다른 서버에 초대하기 위한 링크입니다.", value="[봇 초대하기](https://discord.com/api/oauth2/authorize?client_id=793085952254803988&permissions=8&scope=bot)", inline=False)
+    embed.add_field(name="이 봇을 다른 서버에 초대하기 위한 링크입니다.",
+                    value="[봇 초대하기](https://discord.com/api/oauth2/authorize?client_id=793085952254803988&permissions=8&scope=bot)",
+                    inline=False)
     await ctx.send(embed=embed)
 
 @app.command()
 async def 빡추(ctx, *, text=None):
-    if (text == None): # !빡추 명령어 뒤에 아무것도 입력 하지 않은 경우
+    if None == text:       # !빡추 명령어 뒤에 아무것도 입력 하지 않은 경우
         await ctx.send("누구를 입력하신거죠? 전 입력 받은게 없습니다만?")
-    elif (text == "아서"): # !빡추 명령어 뒤에 봇의 이름을 넣은 경우
+    elif text == "아서":    # !빡추 명령어 뒤에 봇의 이름을 넣은 경우
         await ctx.send("나 빡추 아닌데?")
     else:
         await ctx.send("보셨나요? 보셨나요? 보셨냐구요!!!! " + text + "의 빡추 스탯쌓기!!")
@@ -104,13 +124,265 @@ async def 빡추(ctx, *, text=None):
 
 @app.command()
 async def 씹덕(ctx, text=None):
-    if (text == None): # !씹덕 명령어 뒤에 아무것도 입력 하지 않은 경우
+    if None == text:       # !씹덕 명령어 뒤에 아무것도 입력 하지 않은 경우
         await ctx.send("누구를 입력하신거죠? 전 입력 받은게 없습니다만?")
-    elif (text == "아서"): # !씹덕 명령어 뒤에 봇의 이름을 넣은 경우
+    elif text == "아서":    # !씹덕 명령어 뒤에 봇의 이름을 넣은 경우
         await ctx.send("나 씹덕 아닌데?")
     else:
         await ctx.send("아, " + text + " 그 씹덕 샛기?")
         print(text)
+
+#################### 각 학교의 급식 ####################
+# 찾아 볼 것:
+# 학교별 시도교육청 코드, 표준학교코드 찾기
+# 파이썬에서 오늘 날짜 가져오는 방법 찾기
+
+@app.command()
+async def 대소고(ctx, *, schoolMeal):
+    if schoolMeal == '급식': # 만약 대소고 뒤에 급식이라는 글자가 온다면 아래의 코드를 실행한다.
+
+        url = 'https://open.neis.go.kr/hub/mealServiceDietInfo'
+        params = {
+            'Type': 'json',
+            'ATPT_OFCDC_SC_CODE': 'D10', # 시도교육청코드
+            'SD_SCHUL_CODE': '7240454', # 표준학교코드
+            'MLSV_YMD': time # 급식일자
+        }
+
+        r = requests.get(url, params=params)
+
+        j = r.json()
+
+        embed = discord.Embed(title="오늘의 급식", color=Color)
+
+        total_cal = 0
+
+        if j['mealServiceDietInfo'][1]['row']:  # 만약 JSON 파일에 mealServiceDietInfo가 있다면 아래의 코드를 실행
+            for menu in j['mealServiceDietInfo'][1]['row']:
+                # embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+                embed.add_field(name=menu['MMEAL_SC_NM'], value=menu['DDISH_NM'].replace('<br/>', '\n'), inline=True)
+
+                # 전체 칼로리 계산
+                cal = menu['CAL_INFO']
+                cal = float(cal[0:cal.find(' Kcal')])
+                total_cal += cal
+
+                embed.set_footer(text='made by 빨강고양이',
+                                 icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+            await ctx.send(embed=embed)
+
+        # elif j['RESULT']:
+        #     embed = discord.Embed(title="오늘의 급식", color=Error_Color)
+        #     embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
+        #     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+        #     await ctx.send(embed=embed)
+
+@app.command()
+async def 문화고(ctx, *, schoolMeal):
+    if schoolMeal == '급식': # 만약 문화고 뒤에 급식이라는 글자가 온다면 아래의 코드를 실행한다.
+
+        url = 'https://open.neis.go.kr/hub/mealServiceDietInfo'
+        params = {
+            'Type': 'json',
+            'ATPT_OFCDC_SC_CODE': 'R10', # 시도교육청코드
+            'SD_SCHUL_CODE': '8750172', # 표준학교코드
+            'MLSV_YMD': time # 급식일자
+        }
+
+        r = requests.get(url, params=params)
+
+        j = r.json()
+
+        embed = discord.Embed(title="오늘의 급식", color=Color)
+
+        total_cal = 0
+
+        if j['mealServiceDietInfo'][1]['row']:  # 만약 JSON 파일에 mealServiceDietInfo가 있다면 아래의 코드를 실행
+            for menu in j['mealServiceDietInfo'][1]['row']:
+                # embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+                embed.add_field(name=menu['MMEAL_SC_NM'], value=menu['DDISH_NM'].replace('<br/>', '\n'), inline=True)
+
+                # 전체 칼로리 계산
+                cal = menu['CAL_INFO']
+                cal = float(cal[0:cal.find(' Kcal')])
+                total_cal += cal
+
+                embed.set_footer(text='made by 빨강고양이',
+                                 icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+            await ctx.send(embed=embed)
+
+        # elif j['RESULT']:
+        #     embed = discord.Embed(title="오늘의 급식", color=Error_Color)
+        #     embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
+        #     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+        #     await ctx.send(embed=embed)
+
+@app.command()
+async def 예일고(ctx, *, schoolMeal):
+    if schoolMeal == '급식': # 만약 예일고 뒤에 급식이라는 글자가 온다면 아래의 코드를 실행한다.
+
+        url = 'https://open.neis.go.kr/hub/mealServiceDietInfo'
+        params = {
+            'Type': 'json',
+            'ATPT_OFCDC_SC_CODE': 'R10', # 시도교육청코드
+            'SD_SCHUL_CODE': '8750772', # 표준학교코드
+            'MLSV_YMD': time # 급식일자
+        }
+
+        r = requests.get(url, params=params)
+
+        j = r.json()
+
+        embed = discord.Embed(title="오늘의 급식", color=Color)
+
+        total_cal = 0
+
+        if j['mealServiceDietInfo'][1]['row']:  # 만약 JSON 파일에 mealServiceDietInfo가 있다면 아래의 코드를 실행
+            for menu in j['mealServiceDietInfo'][1]['row']:
+                # embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+                embed.add_field(name=menu['MMEAL_SC_NM'], value=menu['DDISH_NM'].replace('<br/>', '\n'), inline=True)
+
+                # 전체 칼로리 계산
+                cal = menu['CAL_INFO']
+                cal = float(cal[0:cal.find(' Kcal')])
+                total_cal += cal
+
+                embed.set_footer(text='made by 빨강고양이',
+                                 icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+            await ctx.send(embed=embed)
+
+        # elif j['RESULT']:
+        #     embed = discord.Embed(title="오늘의 급식", color=Error_Color)
+        #     embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
+        #     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+        #     await ctx.send(embed=embed)
+
+@app.command()
+async def 신라공고(ctx, *, schoolMeal):
+    if schoolMeal == '급식': # 만약 신라공고 뒤에 급식이라는 글자가 온다면 아래의 코드를 실행한다.
+
+        url = 'https://open.neis.go.kr/hub/mealServiceDietInfo'
+        params = {
+            'Type': 'json',
+            'ATPT_OFCDC_SC_CODE': 'R10', # 시도교육청코드
+            'SD_SCHUL_CODE': '8750323', # 표준학교코드
+            'MLSV_YMD': time # 급식일자
+        }
+
+        r = requests.get(url, params=params)
+
+        j = r.json()
+
+        embed = discord.Embed(title="오늘의 급식", color=Color)
+
+        total_cal = 0
+
+        if j['mealServiceDietInfo'][1]['row']:  # 만약 JSON 파일에 mealServiceDietInfo가 있다면 아래의 코드를 실행
+            for menu in j['mealServiceDietInfo'][1]['row']:
+                # embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+                embed.add_field(name=menu['MMEAL_SC_NM'], value=menu['DDISH_NM'].replace('<br/>', '\n'), inline=True)
+
+                # 전체 칼로리 계산
+                cal = menu['CAL_INFO']
+                cal = float(cal[0:cal.find(' Kcal')])
+                total_cal += cal
+
+                embed.set_footer(text='made by 빨강고양이',
+                                 icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+            await ctx.send(embed=embed)
+
+        # elif j['RESULT']:
+        #     embed = discord.Embed(title="오늘의 급식", color=Error_Color)
+        #     embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
+        #     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+        #     await ctx.send(embed=embed)
+
+@app.command()
+async def 동성고(ctx, *, schoolMeal):
+    if schoolMeal == '급식': # 만약 동성고 뒤에 급식이라는 글자가 온다면 아래의 코드를 실행한다.
+
+        url = 'https://open.neis.go.kr/hub/mealServiceDietInfo'
+        params = {
+            'Type': 'json',
+            'ATPT_OFCDC_SC_CODE': 'R10', # 시도교육청코드
+            'SD_SCHUL_CODE': '8750542', # 표준학교코드
+            'MLSV_YMD': time # 급식일자
+        }
+
+        r = requests.get(url, params=params)
+
+        j = r.json()
+
+        embed = discord.Embed(title="오늘의 급식", color=Color)
+
+        total_cal = 0
+
+        if j['mealServiceDietInfo'][1]['row']:  # 만약 JSON 파일에 mealServiceDietInfo가 있다면 아래의 코드를 실행
+            for menu in j['mealServiceDietInfo'][1]['row']:
+                # embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+                embed.add_field(name=menu['MMEAL_SC_NM'], value=menu['DDISH_NM'].replace('<br/>', '\n'), inline=True)
+
+                # 전체 칼로리 계산
+                cal = menu['CAL_INFO']
+                cal = float(cal[0:cal.find(' Kcal')])
+                total_cal += cal
+
+                embed.set_footer(text='made by 빨강고양이',
+                                 icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+            await ctx.send(embed=embed)
+
+        # elif j['RESULT']:
+        #     embed = discord.Embed(title="오늘의 급식", color=Error_Color)
+        #     embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
+        #     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+        #     await ctx.send(embed=embed)
+
+@app.command()
+async def 포철공고(ctx, *, schoolMeal):
+    if schoolMeal == '급식': # 만약 포철공고 뒤에 급식이라는 글자가 온다면 아래의 코드를 실행한다.
+
+        url = 'https://open.neis.go.kr/hub/mealServiceDietInfo'
+        params = {
+            'Type': 'json',
+            'ATPT_OFCDC_SC_CODE': 'R10', # 시도교육청코드
+            'SD_SCHUL_CODE': '8750337', # 표준학교코드
+            'MLSV_YMD': time # 급식일자
+        }
+
+        r = requests.get(url, params=params)
+
+        j = r.json()
+
+        embed = discord.Embed(title="오늘의 급식", color=Color)
+
+        total_cal = 0
+
+        if j['mealServiceDietInfo'][1]['row']: # 만약 JSON 파일에 mealServiceDietInfo가 있다면 아래의 코드를 실행
+            for menu in j['mealServiceDietInfo'][1]['row']:
+                # embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
+                embed.add_field(name=menu['MMEAL_SC_NM'], value=menu['DDISH_NM'].replace('<br/>', '\n'), inline=True)
+
+                # 전체 칼로리 계산
+                cal = menu['CAL_INFO']
+                cal = float(cal[0:cal.find(' Kcal')])
+                total_cal += cal
+
+                embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+            await ctx.send(embed=embed)
+
+        # elif j['RESULT']:
+        #     embed = discord.Embed(title="오늘의 급식", color=Error_Color)
+        #     embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
+        #     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+        #     await ctx.send(embed=embed)
+
+#################### 가위바위보 게임 ####################
+
+# random.choice를 사용하여 봇이 가위, 바위, 보 중 하나를 랜덤으로 뱉어냄
+# 입력값과 봇에서 랜덤으로 나온 값을 비교하여 승패를 알려줌
+# 게임 한 판이 끝났을 때 계속 할껀지 물어보기
+# 만약 계속 한다고 하면 다시 한번 더 하기
+# 하지 않겠다고 할 경우 게임을 끝내기
 
 #################### 핲스 전적 검색 명령어 ####################
 
