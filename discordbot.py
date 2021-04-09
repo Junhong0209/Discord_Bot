@@ -153,6 +153,7 @@ async def 대소고(ctx, *, schoolMeal):
         j = r.json()
 
         embed = discord.Embed(title="오늘의 급식", color=Color)
+        embed.set_thumbnail(url="https://media.discordapp.net/attachments/819001182369611807/830064995218751488/20cf1df326f8ec26.png?width=1144&height=702")
 
         total_cal = 0
 
@@ -192,6 +193,7 @@ async def 문화고(ctx, *, schoolMeal):
         j = r.json()
 
         embed = discord.Embed(title="오늘의 급식", color=Color)
+        embed.set_thumbnail(url="https://media.discordapp.net/attachments/819001182369611807/830065000038268958/afbe18eb159ba960.png?width=693&height=701")
 
         total_cal = 0
 
@@ -233,6 +235,7 @@ async def 예일고(ctx, *, schoolMeal):
         j = r.json()
 
         embed = discord.Embed(title="오늘의 급식", color=Color)
+        embed.set_thumbnail(url="https://media.discordapp.net/attachments/819001182369611807/830065004627230750/2f48c644fc26fbef.png?width=690&height=702")
 
         total_cal = 0
 
@@ -274,6 +277,7 @@ async def 신라공고(ctx, *, schoolMeal):
         j = r.json()
 
         embed = discord.Embed(title="오늘의 급식", color=Color)
+        embed.set_thumbnail(url="https://media.discordapp.net/attachments/819001182369611807/830064998650085436/2552855f4a26158d.png?width=846&height=702")
 
         total_cal = 0
 
@@ -315,6 +319,7 @@ async def 동성고(ctx, *, schoolMeal):
         j = r.json()
 
         embed = discord.Embed(title="오늘의 급식", color=Color)
+        embed.set_thumbnail(url="https://media.discordapp.net/attachments/819001182369611807/830066751667830794/f331f5b70a79498e.png?width=893&height=702")
 
         total_cal = 0
 
@@ -356,6 +361,7 @@ async def 포철공고(ctx, *, schoolMeal):
         j = r.json()
 
         embed = discord.Embed(title="오늘의 급식", color=Color)
+        embed.set_thumbnail(url="https://media.discordapp.net/attachments/819001182369611807/830065000013103104/7bc6a09a1f12816a.png?width=556&height=701")
 
         total_cal = 0
 
