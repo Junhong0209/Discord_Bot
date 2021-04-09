@@ -9,7 +9,7 @@ token = "NzkzMDg1OTUyMjU0ODAzOTg4.X-nI2Q.QsGUVKfupP8VnHxBfxZ-4IdAEzw"
 
 app = commands.Bot(command_prefix='!')
 
-time = date.today().strftime('%y%m%d') # 시간이 필요한 경우 가져다 사용하면 된다. (출력 방식: yyyymmdd)
+time = date.today().strftime('%y%m%d') # 출력 방식: yyyymmdd
 
 #################### 임베드 색상 ####################
 
@@ -53,7 +53,7 @@ async def 도움말(ctx):
     embed.add_field(name="!초대링크", value="봇 초대 링크를 보내줌", inline=False)
     embed.add_field(name="!핲스 도움말", value="하이퍼 스케이프 전적 검색에 사용되는 명령어를 알려준다.", inline=False)
     embed.add_field(name="!씹덕 [이름]", value="말 그대로 씹덕.....", inline=False)
-    embed.add_field(name="!급식 도움말", value="급식과 관련된 도움말 알려줌", inline=False)
+    embed.add_field(name="!급식", value="급식과 관련된 도움말 알려줌", inline=False)
     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
     await ctx.send(embed=embed)
 
@@ -74,18 +74,17 @@ async def HyperScape_help(ctx, *, text):
         await ctx.send(embed=embed)
 
 @app.command()
-async def 급식(ctx, *, help):
-    if help == '도움말':
-        embed = discord.Embed(title='급식 도움말', color=Color)
-        embed.add_field(name="!대소고 급식", value="대소고 하루 급식을 보여준다.", inline=False)
-        embed.add_field(name="!문화고 급식", value="문화고 하루 급식을 보여준다.", inline=False)
-        embed.add_field(name="!예일고 급식", value="예일고 하루 급식을 보여준다.", inline=False)
-        embed.add_field(name="!신라공고 급식", value="신라공고 하루 급식을 보여준다.", inline=False)
-        embed.add_field(name="!동성고 급식", value="동성고 하루 급식을 보여준다.", inline=False)
-        embed.add_field(name="!포철공고 급식", value="포철공고 하루 급식을 보여준다.", inline=False)
-        embed.add_field(name="![학교 이름] 급식", value="추후 다른 고등학교 추가 예정", inline=False)
-        embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
-        await ctx.send(embed=embed)
+async def 급식(ctx):
+    embed = discord.Embed(title='급식 도움말', color=Color)
+    embed.add_field(name="!대소고 급식", value="대소고 하루 급식을 보여준다.", inline=False)
+    embed.add_field(name="!문화고 급식", value="문화고 하루 급식을 보여준다.", inline=False)
+    embed.add_field(name="!예일고 급식", value="예일고 하루 급식을 보여준다.", inline=False)
+    embed.add_field(name="!신라공고 급식", value="신라공고 하루 급식을 보여준다.", inline=False)
+    embed.add_field(name="!동성고 급식", value="동성고 하루 급식을 보여준다.", inline=False)
+    embed.add_field(name="!포철공고 급식", value="포철공고 하루 급식을 보여준다.", inline=False)
+    embed.add_field(name="![학교 이름] 급식", value="추후 다른 고등학교 추가 예정", inline=False)
+    embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+    await ctx.send(embed=embed)
 
 #################### 명령어들 ####################
 
@@ -135,7 +134,7 @@ async def 씹덕(ctx, text=None):
 #################### 각 학교의 급식 ####################
 # 찾아 볼 것:
 # 학교별 시도교육청 코드, 표준학교코드 찾기
-# 파이썬에서 오늘 날짜 가져오는 방법 찾기
+# 파이썬에서 내일 날짜 가져오는 방법 찾기
 
 @app.command()
 async def 대소고(ctx, *, schoolMeal):
@@ -157,7 +156,7 @@ async def 대소고(ctx, *, schoolMeal):
 
         total_cal = 0
 
-        if j['mealServiceDietInfo'][1]['row']:  # 만약 JSON 파일에 mealServiceDietInfo가 있다면 아래의 코드를 실행
+        try:
             for menu in j['mealServiceDietInfo'][1]['row']:
                 # embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
                 embed.add_field(name=menu['MMEAL_SC_NM'], value=menu['DDISH_NM'].replace('<br/>', '\n'), inline=True)
@@ -167,15 +166,14 @@ async def 대소고(ctx, *, schoolMeal):
                 cal = float(cal[0:cal.find(' Kcal')])
                 total_cal += cal
 
-                embed.set_footer(text='made by 빨강고양이',
-                                 icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+                embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
             await ctx.send(embed=embed)
 
-        # elif j['RESULT']:
-        #     embed = discord.Embed(title="오늘의 급식", color=Error_Color)
-        #     embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
-        #     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
-        #     await ctx.send(embed=embed)
+        except KeyError:
+            embed = discord.Embed(title="오늘의 급식", color=Error_Color)
+            embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
+            embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+            await ctx.send(embed=embed)
 
 @app.command()
 async def 문화고(ctx, *, schoolMeal):
@@ -197,7 +195,7 @@ async def 문화고(ctx, *, schoolMeal):
 
         total_cal = 0
 
-        if j['mealServiceDietInfo'][1]['row']:  # 만약 JSON 파일에 mealServiceDietInfo가 있다면 아래의 코드를 실행
+        try:
             for menu in j['mealServiceDietInfo'][1]['row']:
                 # embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
                 embed.add_field(name=menu['MMEAL_SC_NM'], value=menu['DDISH_NM'].replace('<br/>', '\n'), inline=True)
@@ -211,11 +209,12 @@ async def 문화고(ctx, *, schoolMeal):
                                  icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
             await ctx.send(embed=embed)
 
-        # elif j['RESULT']:
-        #     embed = discord.Embed(title="오늘의 급식", color=Error_Color)
-        #     embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
-        #     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
-        #     await ctx.send(embed=embed)
+        except KeyError:
+            embed = discord.Embed(title="오늘의 급식", color=Error_Color)
+            embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
+            embed.set_footer(text='made by 빨강고양이',
+                             icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+            await ctx.send(embed=embed)
 
 @app.command()
 async def 예일고(ctx, *, schoolMeal):
@@ -237,7 +236,7 @@ async def 예일고(ctx, *, schoolMeal):
 
         total_cal = 0
 
-        if j['mealServiceDietInfo'][1]['row']:  # 만약 JSON 파일에 mealServiceDietInfo가 있다면 아래의 코드를 실행
+        try:
             for menu in j['mealServiceDietInfo'][1]['row']:
                 # embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
                 embed.add_field(name=menu['MMEAL_SC_NM'], value=menu['DDISH_NM'].replace('<br/>', '\n'), inline=True)
@@ -251,11 +250,12 @@ async def 예일고(ctx, *, schoolMeal):
                                  icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
             await ctx.send(embed=embed)
 
-        # elif j['RESULT']:
-        #     embed = discord.Embed(title="오늘의 급식", color=Error_Color)
-        #     embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
-        #     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
-        #     await ctx.send(embed=embed)
+        except KeyError:
+            embed = discord.Embed(title="오늘의 급식", color=Error_Color)
+            embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
+            embed.set_footer(text='made by 빨강고양이',
+                             icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+            await ctx.send(embed=embed)
 
 @app.command()
 async def 신라공고(ctx, *, schoolMeal):
@@ -277,7 +277,7 @@ async def 신라공고(ctx, *, schoolMeal):
 
         total_cal = 0
 
-        if j['mealServiceDietInfo'][1]['row']:  # 만약 JSON 파일에 mealServiceDietInfo가 있다면 아래의 코드를 실행
+        try:
             for menu in j['mealServiceDietInfo'][1]['row']:
                 # embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
                 embed.add_field(name=menu['MMEAL_SC_NM'], value=menu['DDISH_NM'].replace('<br/>', '\n'), inline=True)
@@ -291,11 +291,12 @@ async def 신라공고(ctx, *, schoolMeal):
                                  icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
             await ctx.send(embed=embed)
 
-        # elif j['RESULT']:
-        #     embed = discord.Embed(title="오늘의 급식", color=Error_Color)
-        #     embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
-        #     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
-        #     await ctx.send(embed=embed)
+        except KeyError:
+            embed = discord.Embed(title="오늘의 급식", color=Error_Color)
+            embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
+            embed.set_footer(text='made by 빨강고양이',
+                             icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+            await ctx.send(embed=embed)
 
 @app.command()
 async def 동성고(ctx, *, schoolMeal):
@@ -317,7 +318,7 @@ async def 동성고(ctx, *, schoolMeal):
 
         total_cal = 0
 
-        if j['mealServiceDietInfo'][1]['row']:  # 만약 JSON 파일에 mealServiceDietInfo가 있다면 아래의 코드를 실행
+        try:
             for menu in j['mealServiceDietInfo'][1]['row']:
                 # embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
                 embed.add_field(name=menu['MMEAL_SC_NM'], value=menu['DDISH_NM'].replace('<br/>', '\n'), inline=True)
@@ -331,11 +332,12 @@ async def 동성고(ctx, *, schoolMeal):
                                  icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
             await ctx.send(embed=embed)
 
-        # elif j['RESULT']:
-        #     embed = discord.Embed(title="오늘의 급식", color=Error_Color)
-        #     embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
-        #     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
-        #     await ctx.send(embed=embed)
+        except KeyError:
+            embed = discord.Embed(title="오늘의 급식", color=Error_Color)
+            embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
+            embed.set_footer(text='made by 빨강고양이',
+                             icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+            await ctx.send(embed=embed)
 
 @app.command()
 async def 포철공고(ctx, *, schoolMeal):
@@ -357,7 +359,7 @@ async def 포철공고(ctx, *, schoolMeal):
 
         total_cal = 0
 
-        if j['mealServiceDietInfo'][1]['row']: # 만약 JSON 파일에 mealServiceDietInfo가 있다면 아래의 코드를 실행
+        try:
             for menu in j['mealServiceDietInfo'][1]['row']:
                 # embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
                 embed.add_field(name=menu['MMEAL_SC_NM'], value=menu['DDISH_NM'].replace('<br/>', '\n'), inline=True)
@@ -367,14 +369,16 @@ async def 포철공고(ctx, *, schoolMeal):
                 cal = float(cal[0:cal.find(' Kcal')])
                 total_cal += cal
 
-                embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+                embed.set_footer(text='made by 빨강고양이',
+                                 icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
             await ctx.send(embed=embed)
 
-        # elif j['RESULT']:
-        #     embed = discord.Embed(title="오늘의 급식", color=Error_Color)
-        #     embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
-        #     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
-        #     await ctx.send(embed=embed)
+        except KeyError:
+            embed = discord.Embed(title="오늘의 급식", color=Error_Color)
+            embed.add_field(name='오늘은 급식이 없습니다.', value='오늘은 주말 or 공휴일 이므로 급식이 없습니다.')
+            embed.set_footer(text='made by 빨강고양이',
+                             icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+            await ctx.send(embed=embed)
 
 #################### 가위바위보 게임 ####################
 
