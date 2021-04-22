@@ -18,12 +18,12 @@ def Error():
 class get_schoolMeal:
     date = '오늘이나 내일'
 
-    def __init__(self, params, logo):
+    def __init__(self, params, logo, schoolName):
         self.thumbnail = logo
         self.url = 'https://open.neis.go.kr/hub/mealServiceDietInfo'
         self.icon = 'https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png'
 
-        self.embed = discord.Embed(title=self.date, color=Color)
+        self.embed = discord.Embed(title=schoolName + ' 급식 (' + self.date + ')', color=Color)
         self.embed.set_thumbnail(url=self.thumbnail)
 
         self.r = requests.get(self.url, params=params)
