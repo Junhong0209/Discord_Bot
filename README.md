@@ -28,6 +28,7 @@ Win키를 누르고 CMD를 입력한다.
 그런후 CMD창에 아래의 명령어를 하나씩 친다.
 ```
 pip install discord
+pip install asyncio
 pip install youtube_dl
 pip install requests
 pip install datetime
