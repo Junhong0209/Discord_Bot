@@ -5,13 +5,14 @@ import youtube_dl
 import config
 import utils
 import database
+import Bot_token
 
 from discord.ext import commands
 
 app = commands.Bot(command_prefix='!')
 
 ########## token 가져오기 ##########
-token = config.Config.token
+token = Bot_token.Bot_Token.token
 
 ########## embed color 가져오기 ##########
 Color = config.Config.Color
