@@ -6,6 +6,7 @@ import config
 import utils
 import database
 import Bot_token
+import get_time
 
 from discord.ext import commands
 
@@ -18,10 +19,6 @@ token = Bot_token.Bot_Token.token
 Color = config.Config.Color
 Error_Color = config.Config.Error_Color
 HyperScape_Color = config.Config.HyperScape_Color
-
-########## date 가져오기 ##########
-today = config.Config.today
-tomorrow = config.Config.tomorrow
 
 ########## school logo 가져오기 ##########
 DGSW_Logo = database.DGSW_Logo
@@ -102,24 +99,15 @@ SchoolMeal = ['급식', '내일 급식', '내일급식']
 
 @app.command()
 async def 대소고(ctx, *, schoolMeal):
+    today = get_time.get_time_today()
+    tomorrow = get_time.get_time_tomorrow()
+
     if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'D10',  # 시도교육청코드
-            'SD_SCHUL_CODE': '7240454',  # 표준학교코드
-            'MLSV_YMD': today  # 급식일자
-        }
-        , DGSW_Logo, '대소고')
+        Embed = utils.getMeal_Today(utils.school_information('D10', '7240454', today), DGSW_Logo, '대소고')
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'D10',  # 시도교육청코드
-            'SD_SCHUL_CODE': '7240454',  # 표준학교코드
-            'MLSV_YMD': tomorrow  # 급식일자
-        }
-        , DGSW_Logo, '대소고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('D10', '7240454', tomorrow), DGSW_Logo, '대소고')
         await ctx.send(embed=Embed.embed)
 
     else:
@@ -127,24 +115,15 @@ async def 대소고(ctx, *, schoolMeal):
 
 @app.command()
 async def 문화고(ctx, *, schoolMeal):
+    today = get_time.get_time_today()
+    tomorrow = get_time.get_time_tomorrow()
+
     if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'R10',  # 시도교육청코드
-            'SD_SCHUL_CODE': '8750172',  # 표준학교코드
-            'MLSV_YMD': today  # 급식일자
-        }
-        , MONNHWA_Logo, '문화고')
+        Embed = utils.getMeal_Today(utils.school_information('R10', '8750172', today), MONNHWA_Logo, '문화고')
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'R10',  # 시도교육청코드
-            'SD_SCHUL_CODE': '8750172',  # 표준학교코드
-            'MLSV_YMD': tomorrow  # 급식일자
-        }
-        , MONNHWA_Logo, '문화고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750172', tomorrow), MONNHWA_Logo, '문화고')
         await ctx.send(embed=Embed.embed)
 
     else:
@@ -152,24 +131,15 @@ async def 문화고(ctx, *, schoolMeal):
 
 @app.command()
 async def 예일고(ctx, *, schoolMeal):
+    today = get_time.get_time_today()
+    tomorrow = get_time.get_time_tomorrow()
+
     if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'R10',  # 시도교육청코드
-            'SD_SCHUL_CODE': '8750772',  # 표준학교코드
-            'MLSV_YMD': today  # 급식일자
-        }
-            , YALE_Logo, '예일고')
+        Embed = utils.getMeal_Today(utils.school_information('R10', '8750772', today), YALE_Logo, '예일고')
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'R10',  # 시도교육청코드
-            'SD_SCHUL_CODE': '8750772',  # 표준학교코드
-            'MLSV_YMD': tomorrow  # 급식일자
-        }
-            , YALE_Logo, '예일고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750172', tomorrow), YALE_Logo, '예일고')
         await ctx.send(embed=Embed.embed)
 
     else:
@@ -177,24 +147,15 @@ async def 예일고(ctx, *, schoolMeal):
 
 @app.command()
 async def 신라공고(ctx, *, schoolMeal):
+    today = get_time.get_time_today()
+    tomorrow = get_time.get_time_tomorrow()
+
     if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'R10',  # 시도교육청코드
-            'SD_SCHUL_CODE': '8750323',  # 표준학교코드
-            'MLSV_YMD': today  # 급식일자
-        }
-            , SILLA_TACHNICAL_Logo, '신라공고')
+        Embed = utils.getMeal_Today(utils.school_information('R10', '8750323', today), SILLA_TACHNICAL_Logo, '신라공고')
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'R10',  # 시도교육청코드
-            'SD_SCHUL_CODE': '8750323',  # 표준학교코드
-            'MLSV_YMD': tomorrow  # 급식일자
-        }
-            , SILLA_TACHNICAL_Logo, '신라공고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750323', tomorrow), SILLA_TACHNICAL_Logo, '신라공고')
         await ctx.send(embed=Embed.embed)
 
     else:
@@ -202,24 +163,15 @@ async def 신라공고(ctx, *, schoolMeal):
 
 @app.command()
 async def 동성고(ctx, *, schoolMeal):
+    today = get_time.get_time_today()
+    tomorrow = get_time.get_time_tomorrow()
+
     if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'R10',  # 시도교육청코드
-            'SD_SCHUL_CODE': '8750542',  # 표준학교코드
-            'MLSV_YMD': today  # 급식일자
-        }
-            , DONSUNG_Logo, '동성고')
+        Embed = utils.getMeal_Today(utils.school_information('R10', '8750542', today), DONSUNG_Logo, '동성고')
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'R10',  # 시도교육청코드
-            'SD_SCHUL_CODE': '8750542',  # 표준학교코드
-            'MLSV_YMD': tomorrow  # 급식일자
-        }
-            , DONSUNG_Logo, '동성고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750542', tomorrow), DONSUNG_Logo, '동성고')
         await ctx.send(embed=Embed.embed)
 
     else:
@@ -227,24 +179,15 @@ async def 동성고(ctx, *, schoolMeal):
 
 @app.command()
 async def 포철공고(ctx, *, schoolMeal):
+    today = get_time.get_time_today()
+    tomorrow = get_time.get_time_tomorrow()
+
     if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'R10',  # 시도교육청코드
-            'SD_SCHUL_CODE': '8750337',  # 표준학교코드
-            'MLSV_YMD': today  # 급식일자
-        }
-        , POHANG_JECHEOL_TACHNICAL_Logo, '포철공고')
+        Embed = utils.getMeal_Today(utils.school_information('R10', '8750337', today), POHANG_JECHEOL_TACHNICAL_Logo, '포철공고')
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'R10',  # 시도교육청코드
-            'SD_SCHUL_CODE': '8750337',  # 표준학교코드
-            'MLSV_YMD': tomorrow  # 급식일자
-        }
-        , POHANG_JECHEOL_TACHNICAL_Logo, '포철공고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750337', tomorrow), POHANG_JECHEOL_TACHNICAL_Logo, '포철공고')
         await ctx.send(embed=Embed.embed)
 
     else:
@@ -252,24 +195,15 @@ async def 포철공고(ctx, *, schoolMeal):
 
 @app.command()
 async def 두원공고(ctx, *, schoolMeal):
+    today = get_time.get_time_today()
+    tomorrow = get_time.get_time_tomorrow()
+
     if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'J10',
-            'SD_SCHUL_CODE': '7531257',
-            'MLSV_YMD': today
-        }
-        , DOOWON_TECHNICL_Logo, '두원공고')
+        Embed = utils.getMeal_Today(utils.school_information('J10', '7531257', today), DOOWON_TECHNICL_Logo, '두원공고')
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow({
-            'Type': 'json',
-            'ATPT_OFCDC_SC_CODE': 'J10',
-            'SD_SCHUL_CODE': '7531257',
-            'MLSV_YMD': tomorrow
-        }
-        , DOOWON_TECHNICL_Logo, '두원공고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('J10', '7531257', tomorrow), DOOWON_TECHNICL_Logo, '두원공고')
         await ctx.send(embed=Embed.embed)
 
     else:
@@ -358,19 +292,23 @@ async def 빡추(ctx, *, text=None):
         await ctx.send("보셨나요? 보셨나요? 보셨냐구요!!!! " + text + "의 빡추 스탯쌓기!!")
         print(text)
 
-@app.command()
-async def 공지(ctx, *, text):
-    ch = ctx.get_channel(629262501292539923)
-    await ch.send('ㅎㅇ')
+@app.command(name='현재시간')
+async def times(ctx):
+    await ctx.send(get_time.get_time_now())
 
-@app.command(name='관리자')
-async def is_mange_messages(ctx):
-    if ctx.guild:
-        if ctx.message.author.guild_permissions.administrator:
-            await ctx.send('이 서버의 관리자입니다.')
-        else:
-            await ctx.send('이 서버의 관리자가 아닙니다.')
-    else:
-        await ctx.send('DM으론 불가능합니다.')
+# @app.command()
+# async def 공지(ctx, *, text):
+#     ch = ctx.get_channel(629262501292539923)
+#     await ch.send('ㅎㅇ')
+#
+# @app.command(name='관리자')
+# async def is_mange_messages(ctx):
+#     if ctx.guild:
+#         if ctx.message.author.guild_permissions.administrator:
+#             await ctx.send('이 서버의 관리자입니다.')
+#         else:
+#             await ctx.send('이 서버의 관리자가 아닙니다.')
+#     else:
+#         await ctx.send('DM으론 불가능합니다.')
 
 app.run(token)

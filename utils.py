@@ -15,6 +15,15 @@ def Error():
     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
     return embed
 
+def school_information(education_office, school_code, time):
+    informaion = {
+        'Type': 'json',
+        'ATPT_OFCDC_SC_CODE': education_office,  # 시도교육청코드
+        'SD_SCHUL_CODE': school_code,  # 표준학교코드
+        'MLSV_YMD': time  # 급식일자
+    }
+    return informaion
+
 class get_schoolMeal:
     date = '오늘이나 내일'
 
