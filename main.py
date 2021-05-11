@@ -139,7 +139,7 @@ async def 예일고(ctx, *, schoolMeal):
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750172', tomorrow), YALE_Logo, '예일고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750772', tomorrow), YALE_Logo, '예일고')
         await ctx.send(embed=Embed.embed)
 
     else:
