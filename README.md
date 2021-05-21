@@ -15,9 +15,9 @@
 ```
 discord
 asyncio
-youtube_dl
-requests
+time
 datetime
+requests
 ```
 
 #### 필요한 모듈 다운로드 방법
@@ -25,19 +25,25 @@ datetime
 Win키를 누르고 CMD를 입력한다.
 그런후 CMD창에 아래의 명령어를 하나씩 친다.
 ```
+# main.py에 필요한 라이브러리
 pip install discord
 pip install asyncio
-pip install youtube_dl
-pip install requests
+
+# get_time.py에 필요한 라이브러리
+pip install time
 pip install datetime
+
+# utils.py에 필요한 라이브러리
+pip install requests
 ```
 
 #### Bot Token
 
-`config.py`파일을 텍스트 편집기로 여시면 4번째 줄에 아래와 같이 있습니다.
+`Bot_token.py`이라는 파일을 하나 새로 만들어 안에 아래와 같이 디스코드 봇의 토큰을 넣어주세요.
 
 ```python
-token = 'your bot token'
+class Bot_Token:
+    token = "Your bot token"
 ```
 
 ## 명령어
@@ -46,7 +52,7 @@ token = 'your bot token'
 ```
 !명령어 - 아서 봇이 가지고 있는 모든 명령어를 보여준다.
 !급식 - 급식 조회와 관련된 모든 명령어를 보여준다.
-// !핲스 명령어 - 하이퍼 스케이프와 관련된 모든 명령어를 보여준다. (현재 Code Repactoring 중....)
+// !핲스 명령어 - 하이퍼 스케이프와 관련된 모든 명령어를 보여준다. (현재 다시 만드는 중....)
 ```
 
 #### 명령어 모음
@@ -72,7 +78,7 @@ token = 'your bot token'
 // !pc [닉네임] - PC용 하이퍼 스케이프 전적 검색
 // !ps4 [닉네임] - PS4용 하이퍼 스케이프 전적 검색
 // !xbox [닉네임] - XBOX용 하이퍼 스케이프 전적 검색
-# 위 명령어들은 Code Repactoring 중으로, 현재 구현되어있지 않음.
+# 위 명령어들은 다시 만드는 중....
 ```
 
 ## 급식 명령어 중 새로운 학교 등록 방법
