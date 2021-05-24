@@ -1,6 +1,7 @@
 ########## 외부 라이브러리 ##########
 import discord
 import asyncio
+from discord.ext import commands
 
 ########## 같은 폴더 안에 있는 다른 파이썬 파일 ##########
 import config
@@ -9,7 +10,6 @@ import database
 import Bot_token
 import get_time
 
-from discord.ext import commands
 
 bot = commands.Bot(command_prefix='!')
 
@@ -23,12 +23,16 @@ HyperScape_Color = config.Config.HyperScape_Color
 
 ########## school logo 가져오기 ##########
 DGSW_Logo = database.DGSW_Logo
-YALE_Logo = database.YALE_Logo
-MONNHWA_Logo = database.MOONHWA_Logo
-DONSUNG_Logo = database.DONGSUNG_Logo
-SILLA_TACHNICAL_Logo = database.SILLA_TACHNICAL_Logo
-POHANG_JECHEOL_TACHNICAL_Logo = database.POHANG_JECHEOL_TACHNICAL_Logo
-DOOWON_TECHNICL_Logo = database.DOOWON_TECHNICAL_Logo
+Yale_Logo = database.Yale_Logo
+Moonhwa_Logo = database.Moonhwa_Logo
+Dongsug_Logo = database.Dongsug_Logo
+Silla_Tachnical_Logo = database.Silla_Tachnical_Logo
+Pohang_Jecheol_Tachnical_Logo = database.Pohang_Jecheol_Tachnical_Logo
+Doowon_Tachnical_Logo = database.Doowon_Tachnical_Logo
+Gyerim_Logo = database.Gyerim_Logo
+
+########## img 가져오기 ##########
+developerImg = database.icon
 
 @bot.event
 async def on_ready():
@@ -65,7 +69,7 @@ async def 도움말(ctx):
     embed.add_field(name="!핲스 도움말", value="하이퍼 스케이프 전적 검색에 사용되는 명령어를 알려준다.", inline=False)
     embed.add_field(name="!씹덕 [이름]", value="말 그대로 씹덕.....", inline=False)
     embed.add_field(name="!급식", value="급식과 관련된 도움말 알려줌", inline=False)
-    embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+    embed.set_footer(text='Bot made by. 빨강고양이#5278', icon_url=developerImg)
     await ctx.send(embed=embed)
 
 @bot.command()
@@ -78,7 +82,7 @@ async def 급식(ctx):
     embed.add_field(name="!동성고 급식", value="동성고 하루 급식을 보여준다.", inline=False)
     embed.add_field(name="!포철공고 급식", value="포철공고 하루 급식을 보여준다.", inline=False)
     embed.add_field(name="![학교 이름] 급식", value="추후 다른 고등학교 추가 예정", inline=False)
-    embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+    embed.set_footer(text='Bot made by. 빨강고양이#5278', icon_url=developerImg)
     await ctx.send(embed=embed)
 
 #################### 급식 조회 ####################
@@ -107,11 +111,11 @@ async def 문화고(ctx, *, schoolMeal):
     tomorrow = get_time.get_time_tomorrow()
 
     if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today(utils.school_information('R10', '8750172', today), MONNHWA_Logo, '문화고')
+        Embed = utils.getMeal_Today(utils.school_information('R10', '8750172', today), Moonhwa_Logo, '문화고')
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750172', tomorrow), MONNHWA_Logo, '문화고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750172', tomorrow), Moonhwa_Logo, '문화고')
         await ctx.send(embed=Embed.embed)
 
     else:
@@ -123,11 +127,11 @@ async def 예일고(ctx, *, schoolMeal):
     tomorrow = get_time.get_time_tomorrow()
 
     if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today(utils.school_information('R10', '8750772', today), YALE_Logo, '예일고')
+        Embed = utils.getMeal_Today(utils.school_information('R10', '8750772', today), Yale_Logo, '예일고')
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750772', tomorrow), YALE_Logo, '예일고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750772', tomorrow), Yale_Logo, '예일고')
         await ctx.send(embed=Embed.embed)
 
     else:
@@ -139,11 +143,11 @@ async def 신라공고(ctx, *, schoolMeal):
     tomorrow = get_time.get_time_tomorrow()
 
     if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today(utils.school_information('R10', '8750323', today), SILLA_TACHNICAL_Logo, '신라공고')
+        Embed = utils.getMeal_Today(utils.school_information('R10', '8750323', today), Silla_Tachnical_Logo, '신라공고')
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750323', tomorrow), SILLA_TACHNICAL_Logo, '신라공고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750323', tomorrow), Silla_Tachnical_Logo, '신라공고')
         await ctx.send(embed=Embed.embed)
 
     else:
@@ -155,11 +159,11 @@ async def 동성고(ctx, *, schoolMeal):
     tomorrow = get_time.get_time_tomorrow()
 
     if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today(utils.school_information('R10', '8750542', today), DONSUNG_Logo, '동성고')
+        Embed = utils.getMeal_Today(utils.school_information('R10', '8750542', today), Dongsug_Logo, '동성고')
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750542', tomorrow), DONSUNG_Logo, '동성고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750542', tomorrow), Dongsug_Logo, '동성고')
         await ctx.send(embed=Embed.embed)
 
     else:
@@ -171,11 +175,11 @@ async def 포철공고(ctx, *, schoolMeal):
     tomorrow = get_time.get_time_tomorrow()
 
     if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today(utils.school_information('R10', '8750337', today), POHANG_JECHEOL_TACHNICAL_Logo, '포철공고')
+        Embed = utils.getMeal_Today(utils.school_information('R10', '8750337', today), Pohang_Jecheol_Tachnical_Logo, '포철공고')
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750337', tomorrow), POHANG_JECHEOL_TACHNICAL_Logo, '포철공고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750337', tomorrow), Pohang_Jecheol_Tachnical_Logo, '포철공고')
         await ctx.send(embed=Embed.embed)
 
     else:
@@ -187,11 +191,27 @@ async def 두원공고(ctx, *, schoolMeal):
     tomorrow = get_time.get_time_tomorrow()
 
     if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today(utils.school_information('J10', '7531257', today), DOOWON_TECHNICL_Logo, '두원공고')
+        Embed = utils.getMeal_Today(utils.school_information('J10', '7531257', today), Doowon_Tachnical_Logo, '두원공고')
         await ctx.send(embed=Embed.embed)
 
     elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow(utils.school_information('J10', '7531257', tomorrow), DOOWON_TECHNICL_Logo, '두원공고')
+        Embed = utils.getMeal_Tomorrow(utils.school_information('J10', '7531257', tomorrow), Doowon_Tachnical_Logo, '두원공고')
+        await ctx.send(embed=Embed.embed)
+
+    else:
+        await ctx.send(embed=utils.Error())
+
+@bot.command()
+async def 계림고(ctx, *, schoolMeal):
+    today = get_time.get_time_today()
+    tomorrow = get_time.get_time_tomorrow()
+
+    if schoolMeal == SchoolMeal[0]:
+        Embed = utils.getMeal_Today(utils.school_information('R10', '8750083', today), Gyerim_Logo, '계림고')
+        await ctx.send(embed=Embed.embed)
+
+    elif schoolMeal ==SchoolMeal[1] or schoolMeal == [2]:
+        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750083', tomorrow), Gyerim_Logo, '계림고')
         await ctx.send(embed=Embed.embed)
 
     else:
@@ -200,19 +220,19 @@ async def 두원공고(ctx, *, schoolMeal):
 #################### 명령어 ####################
 
 @bot.command()
-async def 제작자(ctx): # 자신의 정보를 넣으면 된다.
+async def 제작자(ctx):        # 자신의 정보를 넣으면 된다.
     embed = discord.Embed(title="제작자 정보", color=Color)
     embed.add_field(name="Discord", value="빨강고양이#5278", inline=False)
     embed.add_field(name="GitHub", value="[제작자의 GitHub](https://github.com/Junhong0209)", inline=False)
     embed.add_field(name="Facebook", value="[제작자의 Facebook](https://www.facebook.com/Junhong04/)", inline=False)
     embed.add_field(name="Instargram", value="[제작자의 Instargram](https://www.instagram.com/junhong936/)", inline=False)
-    embed.add_field(name="Blog", value="[제작자의 Blog](https://junhong0209.github.io)", inline=False)
-    embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
+    embed.add_field(name="Blog", value="[제작자의 Blog](https://dev-redcat.tistory.com/)", inline=False)
+    embed.set_footer(text='Bot made by. 빨강고양이#5278', icon_url=developerImg)
     await ctx.send(embed=embed)
 
 @bot.command(aliases=['안녕', '안녕하세요', 'ㅎㅇ'])
 async def Hello(ctx):
-    await ctx.send('안녕하세요~! {0.author.mention}님. 오늘도 좋은 하루 보내세요!'.format(ctx))
+    await ctx.send('안녕하세요~! {}님. 오늘도 좋은 하루 보내세요!'.format(ctx.author.mention))
 
 @bot.command()
 async def 초대링크(ctx):
@@ -220,6 +240,7 @@ async def 초대링크(ctx):
     embed.add_field(name="이 봇을 다른 서버에 초대하기 위한 링크입니다.",
                     value="[봇 초대하기](https://discord.com/api/oauth2/authorize?client_id=793085952254803988&permissions=8&scope=bot)",
                     inline=False)
+    embed.set_footer(text="Bot made by. 빨강고양이#5278", icon_url=developerImg)
     await ctx.send(embed=embed)
 
 @bot.command()
@@ -241,5 +262,20 @@ async def is_mange_messages(ctx):
             await ctx.send('이 서버의 관리자가 아닙니다.')
     else:
         await ctx.send('DM으론 불가능합니다.')
+
+@bot.command(name='공지작성')
+async def Announcement(ctx, *, notice):
+    i = ctx.message.author.guild_permissions.administrator
+    channel = ctx.guild.get_channel(844527701300609044)  # 메시지를 보낼 채널 설정
+    # Discord 에서 개발자 모드를 켜서 채널의 ID를 가져와 넣는다.
+    
+    if i is True:
+        embed = discord.Embed(title="**Hotplace 공지사항**", description="공지사항은 항상 잘 숙지 해주시기 바랍니다.\n――――――――――――――――――――――――――――\n\n{}\n\n――――――――――――――――――――――――――――".format(notice), color=Color)
+        embed.set_footer(text="Bot made by. 빨강고양이#5278 | 담당 관리자: {}".format(ctx.author), icon_url=developerImg)
+        await channel.send("@everyone", embed=embed)
+        await ctx.send("```**[ BOT 자동 알림 ]** | 정상적으로 공지가 채널에 작성이 완료되었습니다 : )\n\n[ 기본 작성 설정 채널 ] : {}\n[ 공지 발신자 ] : {}\n\n[ 내용 ]\n{}```".format(channel, ctx.author, notice))
+
+    if i is False:
+        await message.channel.send("{}, 당신은 관리자가 아닙니다".format(ctx.author.mention))
 
 bot.run(token)
