@@ -10,6 +10,8 @@ import database
 import Bot_token
 import get_time
 
+import GameRecordSearch.HyperScapeRecordSearch
+
 
 bot = commands.Bot(command_prefix='!')
 
@@ -62,7 +64,7 @@ async def on_ready():
 
 @bot.command()
 async def 도움말(ctx):
-    embed = discord.Embed(title="명령어 모음", description="", colour=Color)
+    embed = discord.Embed(title="명령어 모음", colour=Color)
     embed.add_field(name="!안녕", value="봇이 인사를 한다.", inline=False)
     embed.add_field(name="!빡추 [이름]", value="들어간 이름이 빡추 스탯을 쌓는다.", inline=False)
     embed.add_field(name="!초대링크", value="봇 초대 링크를 보내준다.", inline=False)
@@ -211,12 +213,32 @@ async def 계림고(ctx, *, schoolMeal):
         Embed = utils.getMeal_Today(utils.school_information('R10', '8750083', today), Gyerim_Logo, '계림고')
         await ctx.send(embed=Embed.embed)
 
-    elif schoolMeal ==SchoolMeal[1] or schoolMeal == [2]:
+    elif schoolMeal == SchoolMeal[1] or schoolMeal == [2]:
         Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750083', tomorrow), Gyerim_Logo, '계림고')
         await ctx.send(embed=Embed.embed)
 
     else:
         await ctx.send(embed=utils.Error())
+
+#################### 핲스 전적 검색 명령어 ####################
+
+@bot.command()
+async def PC(ctx, *, playerNickname):
+    Embed = GameRecordSearch.HyperScapeRecordSearch.HyperScapeRecordSearchPC(playerNickname)
+
+    await ctx.send(embed=Embed.embed)
+
+@bot.command()
+async def PS4(ctx, *, playerNickname):
+    Embed = GameRecordSearch.HyperScapeRecordSearch.HyperScapeRecordSearchPS4(playerNickname)
+
+    await ctx.send(embed=Embed.embed)
+
+@bot.command()
+async def XBOX(ctx, *, playerNickname):
+    Embed = GameRecordSearch.HyperScapeRecordSearch.HyperScapeRecordSearchXBOX(playerNickname)
+
+    await ctx.send(embed=Embed.embed)
 
 #################### 명령어 ####################
 
@@ -237,10 +259,8 @@ async def Hello(ctx):
 
 @bot.command()
 async def 초대링크(ctx):
-    embed = discord.Embed(title="봇 초대 링크", description="", color=Color)
-    embed.add_field(name="이 봇을 다른 서버에 초대하기 위한 링크입니다.",
-                    value="[봇 초대하기](https://discord.com/api/oauth2/authorize?client_id=793085952254803988&permissions=8&scope=bot)",
-                    inline=False)
+    embed = discord.Embed(title="봇 초대 링크", color=Color)
+    embed.add_field(name="이 봇을 다른 서버에 초대하기 위한 링크입니다.", value="[봇 초대하기](https://discord.com/api/oauth2/authorize?client_id=793085952254803988&permissions=8&scope=bot)", inline=False)
     embed.set_footer(text="Bot made by. 빨강고양이#5278", icon_url=developerImg)
     await ctx.send(embed=embed)
 
