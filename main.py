@@ -69,7 +69,7 @@ async def 도움말(ctx):
     embed.add_field(name="!급식", value="급식과 관련된 도움말 알려준다.", inline=False)
     embed.add_field(name="!공지작성 [공지로 할 말]", value="서버의 관리자 권한을 가지고 있다면, 특정 채널에 공지를 쓸 수 있는 명령어다.", inline=False)
     embed.add_field(name="!관리자", value="현재 서버에서 이 명령어를 사용한 사람이 관리자 권한을 가지고 있는지 알려준다.", inline=False)
-    embed.add_field(name="아래는 전적 검색 명령어", value="-----------------------------------------------------------------------------------------------", inline=False)
+    embed.add_field(name="아래는 전적 검색 명령어", value="-" * 95, inline=False)
     embed.add_field(name="!핲스 도움말", value="하이퍼 스케이프 전적 검색에 사용되는 명령어를 알려준다.", inline=False)
     embed.add_field(name="!옵치 [배틀태그]", value="해당 배틀태그 게정의 전적을 알려준다.", inline=False)
     embed.set_footer(text='Bot made by. 빨강고양이#5278', icon_url=developerImg)
@@ -230,7 +230,7 @@ async def 계림고(ctx, *, schoolMeal):
     else:
         await ctx.send(embed=utils.Error())
 
-#################### 핲스 전적 검색 명령어 ####################
+#################### HyperScape 전적 검색 명령어 ####################
 
 @bot.command(aliases=['PC', 'pc', 'Pc'])
 async def HyperScapePC(ctx, *, playerNickname):
@@ -250,14 +250,14 @@ async def HyperScapeXBOX(ctx, *, playerNickname):
 
     await ctx.send(embed=Embed.embed)
 
-#################### 레식 전적 검색 명령어 ####################
+#################### Rainbow Six Siege 전적 검색 명령어 ####################
 
 
 
-#################### 옵치 전적 검색 명령어 ####################
+#################### Overwatch 전적 검색 명령어 ####################
 
 @bot.command(aliases=['옵치'])
-async def OverwatchPC(ctx, *, playerNickname):
+async def OverwatchProfile(ctx, *, playerNickname):
     Embed = GameRecordSearch.OverwatchRecordSearch.OverwatchRecordSearch(playerNickname)
     await ctx.send(embed=Embed.embed)
 
