@@ -7,16 +7,17 @@ from discord.ext import commands
 import config
 import utils
 import database
-import Bot_token
-import get_time
+import botToken
+import getTime
 
+########## 게임 전적 검색 ##########
 import GameRecordSearch.HyperScapeRecordSearch
 import GameRecordSearch.OverwatchRecordSearch
 
 bot = commands.Bot(command_prefix='!')
 
 ########## token 가져오기 ##########
-token = Bot_token.Bot_Token.token
+token = botToken.Bot_Token.token
 
 ########## embed color 가져오기 ##########
 Color = config.Config.Color
@@ -66,24 +67,16 @@ async def 도움말(ctx):
     embed.add_field(name="!안녕", value="봇이 인사를 한다.", inline=False)
     embed.add_field(name="!빡추 [이름]", value="들어간 이름이 빡추 스탯을 쌓는다.", inline=False)
     embed.add_field(name="!초대링크", value="봇 초대 링크를 보내준다.", inline=False)
-    embed.add_field(name="!급식", value="급식과 관련된 도움말 알려준다.", inline=False)
+    embed.add_field(name="!급식", value="급식과 관련된 도움말을 알려준다.", inline=False)
     embed.add_field(name="!공지작성 [공지로 할 말]", value="서버의 관리자 권한을 가지고 있다면, 특정 채널에 공지를 쓸 수 있는 명령어다.", inline=False)
     embed.add_field(name="!관리자", value="현재 서버에서 이 명령어를 사용한 사람이 관리자 권한을 가지고 있는지 알려준다.", inline=False)
     embed.add_field(name="아래는 전적 검색 명령어", value="-" * 95, inline=False)
-    embed.add_field(name="!핲스 도움말", value="하이퍼 스케이프 전적 검색에 사용되는 명령어를 알려준다.", inline=False)
-    embed.add_field(name="!옵치 [배틀태그]", value="해당 배틀태그 게정의 전적을 알려준다.", inline=False)
+    embed.add_field(name="!pc [닉네임]", value="PC용 하이퍼 스케이프 전적 검색", inline=False)
+    embed.add_field(name="!ps4 [닉네임]", value="ps4용 하이퍼 스케이프 전적 검색", inline=False)
+    embed.add_field(name="!xbox [닉네임]", value="xbox용 하이퍼 스케이프 전적 검색", inline=False)
+    embed.add_field(name="!OWP [배틀태그]", value="해당 배틀태그 계정의 프로필을 보여준다.", inline=False)
     embed.set_footer(text='Bot made by. 빨강고양이#5278', icon_url=developerImg)
     await ctx.send(embed=embed)
-
-@bot.command()
-async def 핲스(ctx, *, command):
-    if command == "도움말":
-        embed = discord.Embed(title="HyperScape 명령어", color=HyperScape_Color)
-        embed.add_field(name="!pc [닉네임]", value="PC용 하이퍼 스케이프 전적 검색", inline=False)
-        embed.add_field(name="!ps4 [닉네임]", value="ps4용 하이퍼 스케이프 전적 검색", inline=False)
-        embed.add_field(name="!xbox [닉네임]", value="xbox용 하이퍼 스케이프 전적 검색", inline=False)
-        embed.set_footer(text='Bot made by. 빨강고양이#5278', icon_url=developerImg)
-        await ctx.send(embed=embed)
 
 @bot.command()
 async def 급식(ctx):
@@ -104,8 +97,8 @@ SchoolMeal = ['급식', '내일 급식', '내일급식']
 
 @bot.command()
 async def 대소고(ctx, *, schoolMeal):
-    today = get_time.get_time_today()
-    tomorrow = get_time.get_time_tomorrow()
+    today = getTime.get_time_today()
+    tomorrow = getTime.get_time_tomorrow()
 
     if schoolMeal == SchoolMeal[0]:
         Embed = utils.getMeal_Today(utils.school_information('D10', '7240454', today), DGSWLogo, '대소고')
@@ -118,42 +111,38 @@ async def 대소고(ctx, *, schoolMeal):
     else:
         await ctx.send(embed=utils.Error())
 
-@bot.command()
-async def 문화고(ctx, *, schoolMeal):
-    today = get_time.get_time_today()
-    tomorrow = get_time.get_time_tomorrow()
+@bot.command(aliases=['문급'])
+async def MonnhwaSchoolMeal_Today(ctx):
+    today = getTime.get_time_today()
 
-    if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today(utils.school_information('R10', '8750172', today), MoonhwaLogo, '문화고')
-        await ctx.send(embed=Embed.embed)
+    Embed = utils.getMeal_Today(utils.school_information('R10', '8750172', today), MoonhwaLogo, '문화고')
+    await ctx.send(embed=Embed.embed)
 
-    elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750172', tomorrow), MoonhwaLogo, '문화고')
-        await ctx.send(embed=Embed.embed)
+@bot.command(aliases=['문급내'])
+async def MonnhwaSchoolMeal_Tomorrow(ctx):
+    tomorrow = getTime.get_time_tomorrow()
 
-    else:
-        await ctx.send(embed=utils.Error())
+    Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750172', tomorrow), MoonhwaLogo, '문화고')
+    await ctx.send(embed=Embed.embed)
 
-@bot.command()
-async def 예일고(ctx, *, schoolMeal):
-    today = get_time.get_time_today()
-    tomorrow = get_time.get_time_tomorrow()
+@bot.command(aliases=['예급'])
+async def YaleSchoolMeal_Today(ctx):
+    today = getTime.get_time_today()
 
-    if schoolMeal == SchoolMeal[0]:
-        Embed = utils.getMeal_Today(utils.school_information('R10', '8750772', today), YaleLogo, '예일고')
-        await ctx.send(embed=Embed.embed)
+    Embed = utils.getMeal_Today(utils.school_information('R10', '8750772', today), YaleLogo, '예일고')
+    await ctx.send(embed=Embed.embed)
 
-    elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750772', tomorrow), YaleLogo, '예일고')
-        await ctx.send(embed=Embed.embed)
+@bot.command(aliases=['예급내'])
+async def YaleSchoolMeal_Tomorrow(ctx):
+    tomorrow = getTime.get_time_tomorrow()
 
-    else:
-        await ctx.send(embed=utils.Error())
+    Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750772', tomorrow), YaleLogo, '예일고')
+    await ctx.send(embed=Embed.embed)
 
 @bot.command()
 async def 신라공고(ctx, *, schoolMeal):
-    today = get_time.get_time_today()
-    tomorrow = get_time.get_time_tomorrow()
+    today = getTime.get_time_today()
+    tomorrow = getTime.get_time_tomorrow()
 
     if schoolMeal == SchoolMeal[0]:
         Embed = utils.getMeal_Today(utils.school_information('R10', '8750323', today), SillaTachnicalLogo, '신라공고')
@@ -168,8 +157,8 @@ async def 신라공고(ctx, *, schoolMeal):
 
 @bot.command()
 async def 동성고(ctx, *, schoolMeal):
-    today = get_time.get_time_today()
-    tomorrow = get_time.get_time_tomorrow()
+    today = getTime.get_time_today()
+    tomorrow = getTime.get_time_tomorrow()
 
     if schoolMeal == SchoolMeal[0]:
         Embed = utils.getMeal_Today(utils.school_information('R10', '8750542', today), DongsugLogo, '동성고')
@@ -184,8 +173,8 @@ async def 동성고(ctx, *, schoolMeal):
 
 @bot.command()
 async def 포철공고(ctx, *, schoolMeal):
-    today = get_time.get_time_today()
-    tomorrow = get_time.get_time_tomorrow()
+    today = getTime.get_time_today()
+    tomorrow = getTime.get_time_tomorrow()
 
     if schoolMeal == SchoolMeal[0]:
         Embed = utils.getMeal_Today(utils.school_information('R10', '8750337', today), PohangJecheolTachnicalLogo, '포철공고')
@@ -200,8 +189,8 @@ async def 포철공고(ctx, *, schoolMeal):
 
 @bot.command()
 async def 두원공고(ctx, *, schoolMeal):
-    today = get_time.get_time_today()
-    tomorrow = get_time.get_time_tomorrow()
+    today = getTime.get_time_today()
+    tomorrow = getTime.get_time_tomorrow()
 
     if schoolMeal == SchoolMeal[0]:
         Embed = utils.getMeal_Today(utils.school_information('J10', '7531257', today), DoowonTachnicalLogo, '두원공고')
@@ -216,8 +205,8 @@ async def 두원공고(ctx, *, schoolMeal):
 
 @bot.command()
 async def 계림고(ctx, *, schoolMeal):
-    today = get_time.get_time_today()
-    tomorrow = get_time.get_time_tomorrow()
+    today = getTime.get_time_today()
+    tomorrow = getTime.get_time_tomorrow()
 
     if schoolMeal == SchoolMeal[0]:
         Embed = utils.getMeal_Today(utils.school_information('R10', '8750083', today), GyerimLogo, '계림고')
@@ -256,7 +245,7 @@ async def HyperScapeXBOX(ctx, *, playerNickname):
 
 #################### Overwatch 전적 검색 명령어 ####################
 
-@bot.command(aliases=['옵치'])
+@bot.command(aliases=['OWP'])
 async def OverwatchProfile(ctx, *, playerNickname):
     Embed = GameRecordSearch.OverwatchRecordSearch.OverwatchRecordSearch(playerNickname)
     await ctx.send(embed=Embed.embed)
@@ -310,7 +299,7 @@ async def Announcement(ctx, *, notice):
     i = ctx.message.author.guild_permissions.administrator
     channel = ctx.guild.get_channel(844527701300609044)  # 메시지를 보낼 채널 설정
     # Discord 에서 개발자 모드를 켜서 채널의 ID를 가져와 넣는다.
-    
+
     if i is True:
         embed = discord.Embed(title="**Hotplace 공지사항**", description="공지사항은 항상 잘 숙지 해주시기 바랍니다.\n――――――――――――――――――――――――――――\n\n{}\n\n――――――――――――――――――――――――――――".format(notice), color=Color)
         embed.set_footer(text="Bot made by. 빨강고양이#5278 | 담당 관리자: {}".format(ctx.author), icon_url=developerImg)

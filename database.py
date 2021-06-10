@@ -1,4 +1,5 @@
 ########## img 가져오기 ##########
+
 ########## 학교 로고 ##########
 DGSWLogo = "https://media.discordapp.net/attachments/819001182369611807/830064995218751488/20cf1df326f8ec26.png?width=1144&height=702"
 YaleLogo = "https://media.discordapp.net/attachments/819001182369611807/830065004627230750/2f48c644fc26fbef.png?width=690&height=702"

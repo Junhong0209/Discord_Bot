@@ -16,6 +16,7 @@ def Error():
     embed.set_footer(text='made by 빨강고양이', icon_url='https://cdn.discordapp.com/attachments/819001182369611807/819001250850668605/9965e852f4552224.png')
     return embed
 
+# 학교 정보 입력
 def school_information(education_office, school_code, time):
     informaion = {
         'Type': 'json',
@@ -25,6 +26,7 @@ def school_information(education_office, school_code, time):
     }
     return informaion
 
+# 급식 가져오는 코드
 class get_schoolMeal:
     date = '오늘이나 내일'
 
@@ -37,7 +39,7 @@ class get_schoolMeal:
         self.embed.set_thumbnail(url=self.thumbnail)
 
         self.r = requests.get(self.url, params=params)
-        self.j = self.r.json()
+        self.j = self.r.json() 
 
         self.parseJson()
 
