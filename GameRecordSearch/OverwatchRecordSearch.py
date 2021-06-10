@@ -11,8 +11,6 @@ class OverwatchRecordSearch:
 
         self.url = "https://best-overwatch-api.herokuapp.com/player/pc/kr/" + playerNickname
 
-        self.BattleTag = battleTag
-
         self.r = requests.get(self.url)
         self.j = self.r.json()
         
@@ -46,10 +44,9 @@ class OverwatchRecordSearch:
     def parseJson(self):
         self.embed.add_field(name='추천 레벨: ' + str(self.recommendationLevel), value='스포츠 정신: ' + str(self.sportManShip) + "%\n" + '지휘관: ' + str(self.shotCaller) + '%\n' + '팀 플레이어: ' + str(self.teamMate) + '%', inline=False)
         if not self.profile:
-            self.embed.add_field(name='프로필 상태', value='현재 프로필 공개 상태입니다.', inline=False)
             self.embed.add_field(name='빠른대전', value="승리: " + str(self.quickplayWin) + "판\n" + "플레이 판 수: " + str(self.quickplayPlayed) + "판\n" + "플레이 시간: " + self.quickplayPlayTime, inline=False)
             if self.competitiveWin is not None:
-                self.embed.add_field(name='경쟁전', value='승리: ' + str(self.competitiveWin) + "판\n" + "패배: " + str(self.competitiveLost) + "판\n" + "무승부: " + str(self.competitiveDraw) + "판\n" + "플레이 판 수: " + str(self.competitivePlayed) + "판\n" + "승률: " + str(self.competitiveWin_rate) + "%" + "플레이 시간" + str(self.competitivePlayTime), inline=False)
+                self.embed.add_field(name='경쟁전', value='승리: ' + str(self.competitiveWin) + "판\n" + "패배: " + str(self.competitiveLost) + "판\n" + "무승부: " + str(self.competitiveDraw) + "판\n" + "플레이 판 수: " + str(self.competitivePlayed) + "판\n" + "승률: " + str(self.competitiveWin_rate) + "%\n" + "플레이 시간" + str(self.competitivePlayTime), inline=False)
             else:
                 self.embed.add_field(name='경쟁전', value='경쟁전을 플레이 하지 않아서 전적이 존재 하지 않습니다.')
         else:
