@@ -43,7 +43,7 @@ async def on_ready():
     print('=' * 30)
 
     game = discord.Game('정신 차리기')
-    await bot.change_presence(status=discord.Status.offline, activity=game)
+    await bot.change_presence(status=discord.Status.idle, activity=game)
     await asyncio.sleep(5)
     while True:
         game = discord.Game('빡추 스탯 쌓기')
@@ -118,12 +118,28 @@ async def MonnhwaSchoolMeal_Today(ctx):
     Embed = utils.getMeal_Today(utils.school_information('R10', '8750172', today), MoonhwaLogo, '문화고')
     await ctx.send(embed=Embed.embed)
 
-@bot.command(aliases=['문급내'])
+@bot.command(aliases=['문급내', '문내급'])
 async def MonnhwaSchoolMeal_Tomorrow(ctx):
     tomorrow = getTime.get_time_tomorrow()
 
     Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750172', tomorrow), MoonhwaLogo, '문화고')
     await ctx.send(embed=Embed.embed)
+
+@bot.command()
+async def 예일고(ctx, *, schoolMeal):
+    today = getTime.get_time_today()
+    tomorrow = getTime.get_time_tomorrow()
+
+    if schoolMeal == SchoolMeal[0]:
+        Embed = utils.getMeal_Today(utils.school_information('R10', '8750772', today), YaleLogo, '예일고')
+        await ctx.send(embed=Embed.embed)
+
+    elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
+        Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750772', tomorrow), YaleLogo, '예일고')
+        await ctx.send(embed=Embed.embed)
+
+    else:
+        await ctx.send(embed=utils.Error())
 
 @bot.command(aliases=['예급'])
 async def YaleSchoolMeal_Today(ctx):
@@ -132,7 +148,7 @@ async def YaleSchoolMeal_Today(ctx):
     Embed = utils.getMeal_Today(utils.school_information('R10', '8750772', today), YaleLogo, '예일고')
     await ctx.send(embed=Embed.embed)
 
-@bot.command(aliases=['예급내'])
+@bot.command(aliases=['예급내', '예내급'])
 async def YaleSchoolMeal_Tomorrow(ctx):
     tomorrow = getTime.get_time_tomorrow()
 
@@ -170,6 +186,20 @@ async def 동성고(ctx, *, schoolMeal):
 
     else:
         await ctx.send(embed=utils.Error())
+
+@bot.command(aliases=['동급'])
+async def DongsungMeal_Today(ctx):
+    today = getTime.get_time_today()
+
+    Embed = utils.getMeal_Today(utils.school_information('R10', '8750542', today), DongsugLogo, '동성고')
+    await ctx.send(embed=Embed.embed)
+
+@bot.command(aliases=['동내급', '동급내'])
+async def DongsugMeal_Tomorrow(ctx):
+    tomorrow = getTime.get_time_tomorrow()
+
+    Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750542', tomorrow), DongsugLogo, '동성고')
+    await ctx.send(embed=Embed.embed)
 
 @bot.command()
 async def 포철공고(ctx, *, schoolMeal):
@@ -245,10 +275,22 @@ async def HyperScapeXBOX(ctx, *, playerNickname):
 
 #################### Overwatch 전적 검색 명령어 ####################
 
+Game = ['빠른대전', '경쟁전']
+
 @bot.command(aliases=['OWP'])
 async def OverwatchProfile(ctx, *, playerNickname):
-    Embed = GameRecordSearch.OverwatchRecordSearch.OverwatchRecordSearch(playerNickname)
+    Embed = GameRecordSearch.OverwatchRecordSearch.ProfileSearch(playerNickname)
     await ctx.send(embed=Embed.embed)
+
+@bot.command(aliases=['OWS'])
+async def OverwatchStats(ctx, gameMode, playerNickname):
+    if gameMode == Game[0]:
+        Embed = GameRecordSearch.OverwatchRecordSearch.quick(playerNickname)
+        await ctx.send(embed=Embed.embed)
+
+    elif gameMode == Game[1]:
+        Embed = GameRecordSearch.OverwatchRecordSearch.competitive(playerNickname)
+        await ctx.send(embed=Embed.embed)
 
 #################### 명령어 ####################
 
@@ -282,7 +324,6 @@ async def 빡추(ctx, *, text=None):
         await ctx.send("나 빡추 아닌데?")
     else:
         await ctx.send("보셨나요? 보셨나요? 보셨냐구요!!!! " + text + "의 빡추 스탯쌓기!!")
-        print(text)
 
 @bot.command(name='관리자')
 async def is_mange_messages(ctx):
