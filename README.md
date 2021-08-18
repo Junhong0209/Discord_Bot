@@ -25,7 +25,7 @@
 ![학교이름] 급식 - 해당 학교의 하루 급식을 보여줌
 ![학교이름] 내일급식 or ![학교이름] 내일 급식 - 해당 학교의 다음날 급식을 보여줌
 ```
-* [현재 등록 되어 있는 학교](https://github.com/Junhong0209/Discord_Bot/blob/main/README/schoolList.md)
+* [현재 등록 되어 있는 학교](https://github.com/Junhong0209/Discord_Bot/blob/main/Markdown%20File/schoolList.md)
 
 #### 전적 검색 명령어
 ```
@@ -38,6 +38,6 @@
 !OWS 경쟁전 [닉네임#배틀태그] - 해당 유저의 경쟁전 스탯을 보여준다.
 ```
 
-## [Self Hosting](https://github.com/Junhong0209/Discord_Bot/blob/main/README/SelfHosting.md)
+## [Self Hosting](https://github.com/Junhong0209/Discord_Bot/blob/main/Markdown%20File/SelfHosting.md)
 
-## [급식 명령어 중 새로운 학교 등록 방법](https://github.com/Junhong0209/Discord_Bot/blob/main/README/addNewSchool.md)
+## [급식 명령어 중 새로운 학교 등록 방법](https://github.com/Junhong0209/Discord_Bot/blob/main/Markdown%20File/addNewSchool.md)
