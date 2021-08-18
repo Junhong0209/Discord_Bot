@@ -269,10 +269,6 @@ async def HyperScapeXBOX(ctx, *, playerNickname):
 
     await ctx.send(embed=Embed.embed)
 
-#################### Rainbow Six Siege 전적 검색 명령어 ####################
-
-
-
 #################### Overwatch 전적 검색 명령어 ####################
 
 Game = ['빠른대전', '경쟁전']
