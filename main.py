@@ -139,16 +139,16 @@ async def 문화고(ctx, *, schoolMeal):
 
 @bot.command(aliases=['문급'])
 async def MonnhwaSchoolMeal_Today(ctx):
-  today = getTime.get_time_today()
+  today = time.get_time_today()
 
-  Embed = utils.getMeal_Today(utils.school_information('R10', '8750172', today), MoonhwaLogo, '문화고')
+  Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750172', today), MoonhwaLogo, '문화고')
   await ctx.send(embed=Embed.embed)
 
 @bot.command(aliases=['문급내', '문내급'])
 async def MonnhwaSchoolMeal_Tomorrow(ctx):
-  tomorrow = getTime.get_time_tomorrow()
+  tomorrow = time.get_time_tomorrow()
 
-  Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750172', tomorrow), MoonhwaLogo, '문화고')
+  Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750172', tomorrow), MoonhwaLogo, '문화고')
   await ctx.send(embed=Embed.embed)
 
 @bot.command()
@@ -169,16 +169,16 @@ async def 예일고(ctx, *, schoolMeal):
 
 @bot.command(aliases=['예급'])
 async def YaleSchoolMeal_Today(ctx):
-  today = getTime.get_time_today()
+  today = time.get_time_today()
 
-  Embed = utils.getMeal_Today(utils.school_information('R10', '8750772', today), YaleLogo, '예일고')
+  Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750772', today), YaleLogo, '예일고')
   await ctx.send(embed=Embed.embed)
 
 @bot.command(aliases=['예급내', '예내급'])
 async def YaleSchoolMeal_Tomorrow(ctx):
-  tomorrow = getTime.get_time_tomorrow()
+  tomorrow = time.get_time_tomorrow()
 
-  Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750772', tomorrow), YaleLogo, '예일고')
+  Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750772', tomorrow), YaleLogo, '예일고')
   await ctx.send(embed=Embed.embed)
 
 @bot.command()
@@ -215,16 +215,16 @@ async def 동성고(ctx, *, schoolMeal):
 
 @bot.command(aliases=['동급'])
 async def DongsungMeal_Today(ctx):
-  today = getTime.get_time_today()
+  today = time.get_time_today()
 
-  Embed = utils.getMeal_Today(utils.school_information('R10', '8750542', today), DongsugLogo, '동성고')
+  Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750542', today), DongsugLogo, '동성고')
   await ctx.send(embed=Embed.embed)
 
 @bot.command(aliases=['동내급', '동급내'])
 async def DongsugMeal_Tomorrow(ctx):
-  tomorrow = getTime.get_time_tomorrow()
+  tomorrow = time.get_time_tomorrow()
 
-  Embed = utils.getMeal_Tomorrow(utils.school_information('R10', '8750542', tomorrow), DongsugLogo, '동성고')
+  Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750542', tomorrow), DongsugLogo, '동성고')
   await ctx.send(embed=Embed.embed)
 
 @bot.command()
