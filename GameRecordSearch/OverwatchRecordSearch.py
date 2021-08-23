@@ -2,9 +2,11 @@ import requests
 import discord
 
 import config
+import Image.Image
 
-errorColor = config.Config.Error_Color
+errorColor = config.Config.ErrorColor
 OverwatchColor = config.Config.OverwatchColor
+developerImg = Image.Image.icon
 
 class ProfileSearch:
   def __init__(self, battleTag):
@@ -61,6 +63,7 @@ class ProfileSearch:
       self.embed.add_field(name='빠른 대전', value='승리: ' + str(self.quickplayWin) + '판\n' + '플레이 수: ' + str( self.quickplayPlayed) + '판\n' + '플레이 시간' + str(self.quickplayPlayTime), inline=False)
       self.embed.add_field(name='경쟁전', value='승리: ' + str(self.competitiveWin) + "판\n" + "패배: " +  str(self.competitiveLost) + "판\n" + "무승부: " +  str(self.competitiveDraw) + "판\n" + "플레이 판 수: " +  str(self.competitivePlayed) + "판\n" + "승률: " +  str(self.competitiveWin_rate) + "%\n" + "플레이 시간" + str(self.competitivePlayTime), inline=False)
       self.embed.add_field(name='경쟁전 점수', value='탱커: ' + str(self.tank) + '점\n' + '딜러: ' + str(self.dps) + '점\n' + '힐러: ' +  str(self.support) + '점\n')
+      self.embed.set_footer(text='Bot made by. 빨강고양이#5278', icon_url=developerImg)
 
 class StatsSearch:
   Game = '빠른대전 or 경쟁전'
@@ -201,6 +204,7 @@ class StatsSearch:
     self.embed.add_field(name="준 피해 - 한 게임 최고 기록", value=str(self.bestAllDamage) + "딜", inline=True)
     self.embed.add_field(name="방벽에 준 피해 - 한 게임 최고 기록", value=str(self.bestBarrierDamage) + "딜", inline=True)
     self.embed.add_field(name="영웅에게 준 피해 - 한 게임 최고 기록", value=str(self.bestHeroDamage) + "딜", inline=True)
+    self.embed.set_footer(text='Bot made by. 빨강고양이#5278', icon_url=developerImg)
 
   def competitiveParseJson(self):
     for i in range(0, 3):
@@ -230,6 +234,7 @@ class StatsSearch:
     self.embed.add_field(name="치유량 - 한 게임 최고 기록", value=str(self.bestHealing) + "힐", inline=True)
     self.embed.add_field(name="준 피해 - 한 게임 최고 기록", value=str(self.bestAllDamage) + "딜", inline=True)
     self.embed.add_field(name="영웅에게 준 피해 - 한 게임 최고 기록", value=str(self.bestHeroDamage) + "딜", inline=True)
+    self.embed.set_footer(text='Bot made by. 빨강고양이#5278', icon_url=developerImg)
 
 class quick(StatsSearch):
   Game = '빠른대전'

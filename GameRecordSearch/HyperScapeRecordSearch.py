@@ -7,8 +7,8 @@ import Image.Image
 
 image = Image.Image
 
-HyperScapeColor = config.Config.HyperScape_Color
-ErrorColor = config.Config.Error_Color
+HyperScapeColor = config.Config.HyperScapeColor
+ErrorColor = config.Config.ErrorColor
 
 delvoperIcon = image.icon
 
@@ -23,9 +23,9 @@ class HyperScapeRecordSearch:
 
     self.kda = None
     self.wins = None
-    self.winper = None
+    self.winrate = None
     self.avgservivaltime = None
-    self.crownper = None
+    self.crownrate = None
     self.crownwins = None
     self.kills = None
     self.assists = None
@@ -34,7 +34,7 @@ class HyperScapeRecordSearch:
     self.revives = None
     self.crownpickup = None
     self.damagedone = None
-    self.headshotper = None
+    self.headshotrate = None
     self.killgame = None
     self.killmin = None
 
@@ -67,11 +67,11 @@ class HyperScapeRecordSearch:
         elif x == 1:
           self.wins = self.soup.select(".value")[x].get_text()
         elif x == 2:
-          self.winper = self.soup.select(".value")[x].get_text()
+          self.winrate = self.soup.select(".value")[x].get_text()
         elif x == 3:
           self.avgservivaltime = self.soup.select(".value")[x].get_text()
         elif x == 4:
-          self.crownper = self.soup.select(".value")[x].get_text()
+          self.crownrate = self.soup.select(".value")[x].get_text()
         elif x == 5:
           self.crownwins = self.soup.select(".value")[x].get_text()
         elif x == 6:
@@ -89,7 +89,7 @@ class HyperScapeRecordSearch:
         elif x == 12:
           self.damagedone = self.soup.select(".value")[x].get_text()
         elif x == 13:
-          self.headshotper = self.soup.select(".value")[x].get_text()
+          self.headshotrate = self.soup.select(".value")[x].get_text()
         elif x == 14:
           self.killgame = self.soup.select(".value")[x].get_text()
         elif x == 15:
@@ -106,9 +106,9 @@ class HyperScapeRecordSearch:
         self.embed.add_field(name="게임 수", value=matches+'게임', inline=True)
         self.embed.add_field(name="K/d", value=self.kda, inline=True)
         self.embed.add_field(name="승리", value=str(self.wins) + '게임', inline=True)
-        self.embed.add_field(name="승리 비율", value=self.winper, inline=True)
+        self.embed.add_field(name="승리 비율", value=self.winrate, inline=True)
         self.embed.add_field(name="평균 생존 시간", value=self.avgservivaltime, inline=True)
-        self.embed.add_field(name="왕관 획득", value=str(self.crownper) + '%', inline=True)
+        self.embed.add_field(name="왕관 획득", value=str(self.crownrate) + '%', inline=True)
         self.embed.add_field(name="왕관으로 이긴 게임", value=str(self.crownwins) + '게임', inline=True)
         self.embed.add_field(name="킬", value=str(self.kills) + '킬', inline=True)
         self.embed.add_field(name="어시스트", value=self.assists, inline=True)
@@ -117,7 +117,7 @@ class HyperScapeRecordSearch:
         self.embed.add_field(name="부활", value=str(self.revives) + '회', inline=True)
         self.embed.add_field(name="왕관 획득 수", value=str(self.crownpickup) + '번', inline=True)
         self.embed.add_field(name="총합 데미지", value=str(self.damagedone), inline=True)
-        self.embed.add_field(name="헤드샷 비율", value=self.headshotper, inline=True)
+        self.embed.add_field(name="헤드샷 비율", value=self.headshotrate, inline=True)
         self.embed.add_field(name="게임당 킬수", value=str(self.killgame) + '킬', inline=True)
         self.embed.add_field(name="분당 킬수", value=str(self.killmin) + '킬', inline=True)
         self.embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/708693776180314223/743432880969220156/Untitled-1.png")
