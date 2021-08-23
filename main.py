@@ -17,8 +17,9 @@ getSchoolMeal = SchoolMeal.schoolMeal
 logo = SchoolMeal.schoolLogo
 
 ########## 전적 검색용 파일 ##########
-import GameRecordSearch
-import GameRecordSearch
+import GameRecordSearch.HyperScapeRecordSearch
+import GameRecordSearch.OverwatchRecordSearch
+import GameRecordSearch.LoLRecordSearch
 
 ########## Bot 명령어 접두사 ##########
 
@@ -46,27 +47,32 @@ developerImg = image.icon
 
 @bot.event
 async def on_ready():
-  print('Loggend-in Bot:', bot.user.name)
-  print('Bot id:', bot.user.id)
-  print('connection was succesful')
-  print('=' * 30)
+  try:
+    print('Loggend-in Bot:', bot.user.name)
+    print('Bot id:', bot.user.id)
+    print('connection was succesful')
+    print('=' * 30)
 
-  game = discord.Game('정신차리기')
-  await bot.change_presence(status=discord.Status.idle, activity=game)
-  await asyncio.sleep(5)
-  while True:
-    game = discord.Game('빡추 스탯 쌓기')
-    await bot.change_presence(status=discord.Status.online, activity=game)
-    await asyncio.sleep(3)
-    game = discord.Game('여전히 베타 테스트 중이에요~')
-    await bot.change_presence(status=discord.Status.online, activity=game)
-    await asyncio.sleep(3)
-    game = discord.Game('테스트가 언제 쯤 끝날까요~')
-    await bot.change_presence(status=discord.Status.online, activity=game)
-    await asyncio.sleep(3)
-    game = discord.Game('!도움말')
-    await bot.change_presence(status=discord.Status.online, activity=game)
-    await asyncio.sleep(3)
+    game = discord.Game('정신차리기')
+    await bot.change_presence(status=discord.Status.idle, activity=game)
+    await asyncio.sleep(5)
+    while True:
+      game = discord.Game('빡추 스탯 쌓기')
+      await bot.change_presence(status=discord.Status.online, activity=game)
+      await asyncio.sleep(3)
+      game = discord.Game('여전히 베타 테스트 중이에요~')
+      await bot.change_presence(status=discord.Status.online, activity=game)
+      await asyncio.sleep(3)
+      game = discord.Game('테스트가 언제 쯤 끝날까요~')
+      await bot.change_presence(status=discord.Status.online, activity=game)
+      await asyncio.sleep(3)
+      game = discord.Game('!도움말')
+      await bot.change_presence(status=discord.Status.online, activity=game)
+      await asyncio.sleep(3)
+  except ConnectionResetError as e:
+    print('')
+    print('Log out Bot: ', bot.user.name)
+    print('Internet desconnect')
 
 #################### 도움말 명령어 ####################
 
@@ -84,6 +90,7 @@ async def 도움말(ctx):
   embed.add_field(name='!ps4 [닉네임]', value='ps4용 하이퍼 스케이프 전적 검색', inline=False)
   embed.add_field(name='!xbox [닉네임]', value='xbox용 하이퍼 스케이프 전적 검색', inline=False)
   embed.add_field(name='!OWP [배틀태그]', value='해당 배틀태그 계정의 프로필을 보여준다.', inline=False)
+  embed.add_field(name='!OWS [빠른대전 or 경쟁전] [배틀태그]', value='해당 배틀태그 계정의 스탯을 보여준다.', inline=False)
   embed.set_footer(text='Bot made by. 빨강고양이#5278', icon_url=developerImg)
   await ctx.send(embed=embed)
 
@@ -330,6 +337,17 @@ async def OverwatchStats(ctx, gameMode, playerNickname):
     Embed = GameRecordSearch.OverwatchRecordSearch.competitive(playerNickname)
     await ctx.send(embed=Embed.embed)
 
+#################### League of Legends 전적 검색 명령어 ####################
+
+@bot.command(aliases=['롤'])
+async def LOLStats(ctx, *, playerNickname):
+  Embed = GameRecordSearch.LoLRecordSearch.LoLRecordSearch(playerNickname)
+  await ctx.send(embed=Embed.Search(playerNickname))
+
+#################### Game ####################
+
+
+
 #################### 명령어 ####################
 
 @bot.command()
@@ -377,15 +395,15 @@ async def is_mange_messages(ctx):
 async def Announcement(ctx, *, notice):
   i = ctx.message.author.guild_permissions.administrator
   # Discord 에서 개발자 모드를 켜서 채널의 ID를 가져와 넣는다.
-  channel = ctx.guild.get_channel(844527701300609044)  # 메시지를 보낼 채널 설정
+  channel = ctx.guild.get_channel(852874975768608779)  # 메시지를 보낼 채널 설정
 
   if i is True:
     embed = discord.Embed(title="**Hotplace 공지사항**", description="공지사항은 항상 잘 숙지 해주시기 바랍니다.\n――――――――――――――――――――――――――――\n\n{}\n\n――――――――――――――――――――――――――――".format(notice), color=Color)
     embed.set_footer(text="Bot made by. 빨강고양이#5278 | 담당 관리자: {}".format(ctx.author), icon_url=developerImg)
-    await channel.send("@everyone", embed=embed)
+    await channel.send(embed=embed)
     await ctx.send("```**[ BOT 자동 알림 ]** | 정상적으로 공지가 채널에 작성이 완료되었습니다 : )\n\n[ 기본 작성 설정 채널 ] : {}\n[ 공지 발신자 ] : {}\n\n[ 내용 ]\n{}```".format(channel, ctx.author, notice))
 
   if i is False:
-    await message.channel.send("{}, 당신은 관리자가 아닙니다".format(ctx.author.mention))
+    await ctx.send("{}님, 당신은 관리자가 아닙니다".format(ctx.author.mention))
 
 bot.run(token)
