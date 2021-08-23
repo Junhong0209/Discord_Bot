@@ -1,12 +1,12 @@
 import requests
 import discord
 
-import config
-import Image.Image
+from config import Config as config
+from Image import Image as image
 
-errorColor = config.Config.ErrorColor
-OverwatchColor = config.Config.OverwatchColor
-developerImg = Image.Image.icon
+errorColor = config.ErrorColor
+OverwatchColor = config.OverwatchColor
+developerImg = image.icon
 
 class ProfileSearch:
   def __init__(self, battleTag):
@@ -95,7 +95,7 @@ class StatsSearch:
       self.quickWeapon_accuracyHero = [1, 2, 3]
       self.quickWeapon_accuracy = [1, 2, 3]
 
-      for i in range(0, 3):
+      for i in range(3):
         # 많이 플레이한 상위 3개 영웅 이름과 플레이 시간
         self.quickPlayedHero[i] = self.j['stats']['top_heroes']['quickplay']['played'][i]['hero']
         self.quickPlayedTime[i] = self.j['stats']['top_heroes']['quickplay']['played'][i]['played']

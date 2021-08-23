@@ -3,14 +3,17 @@ import requests
 import discord
 
 ########## 다른 파이썬 파일 ##########
-import config
+from config import Config as config
 import Image.Image
 
 image = Image.Image
 
 ########### Embed Color ##########
-Color = config.Config.Color
-ErrorColor = config.Config.ErrorColor
+Color = config.Color
+ErrorColor = config.ErrorColor
+
+########### Embed Footer ##########
+footerMsg = config.FooterMsg
 
 ########### Image ###########
 developerImg = image.icon
@@ -18,7 +21,7 @@ developerImg = image.icon
 def Error():
   embed = discord.Embed(title='Error', color=ErrorColor)
   embed.add_field(name='존재하지 않는 명령어입니다.', value='명령어를 확인 후 다시 입력해 주세요.')
-  embed.set_footer(text='made by. 빨강고양이#5278', icon_url=developerImg)
+  embed.set_footer(text=footerMsg, icon_url=developerImg)
   return embed
 
 # 학교 정보

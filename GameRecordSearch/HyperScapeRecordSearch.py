@@ -2,13 +2,11 @@ import discord
 from bs4 import BeautifulSoup
 import requests
 
-import config
-import Image.Image
+from config import Config as config
+from Image import Image as image
 
-image = Image.Image
-
-HyperScapeColor = config.Config.HyperScapeColor
-ErrorColor = config.Config.ErrorColor
+HyperScapeColor = config.HyperScapeColor
+ErrorColor = config.ErrorColor
 
 delvoperIcon = image.icon
 
