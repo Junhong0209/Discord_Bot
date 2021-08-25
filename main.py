@@ -4,32 +4,29 @@ import asyncio
 from discord.ext import commands
 
 ########## 다른 파이썬 파일 ##########
-import config
 import BotToken
-import Image.Image
-import SchoolMeal.getTime
-import SchoolMeal.schoolMeal
-import SchoolMeal.schoolLogo
-
-image = Image.Image
-time = SchoolMeal.getTime
-getSchoolMeal = SchoolMeal.schoolMeal
-logo = SchoolMeal.schoolLogo
+from config import Config as config
+from Image import Image as image
+from SchoolMeal import getTime as time
+from SchoolMeal import schoolMeal as getSchoolMeal
+from SchoolMeal import schoolLogo as logo
 
 ########## 전적 검색용 파일 ##########
-import GameRecordSearch.HyperScapeRecordSearch
-import GameRecordSearch.OverwatchRecordSearch
-import GameRecordSearch.LoLRecordSearch
+from GameRecordSearch import HyperScapeRecordSearch as HRS
+from GameRecordSearch import OverwatchRecordSearch as ORS
+from GameRecordSearch import LoLRecordSearch as LRS
+
+########## 임베드 Footer 글 ##########
+footerMsg = config.FooterMsg
 
 ########## Bot 명령어 접두사 ##########
-
 bot = commands.Bot(command_prefix='!')
 
 ########## token ##########
 token = BotToken.Token.token
 
 ########## embed color ##########
-Color = config.Config.Color
+Color = config.Color
 
 ########## School Logo ##########
 DGSWLogo = logo.DGSWLogo
@@ -71,8 +68,10 @@ async def on_ready():
       await asyncio.sleep(3)
   except ConnectionResetError as e:
     print('')
-    print('Log out Bot: ', bot.user.name)
-    print('Internet desconnect')
+    print('Log out Bot')
+    print('Connection Reset Error.')
+    print('Restart Please.')
+    print('=' * 30)
 
 #################### 도움말 명령어 ####################
 
@@ -91,7 +90,7 @@ async def 도움말(ctx):
   embed.add_field(name='!xbox [닉네임]', value='xbox용 하이퍼 스케이프 전적 검색', inline=False)
   embed.add_field(name='!OWP [배틀태그]', value='해당 배틀태그 계정의 프로필을 보여준다.', inline=False)
   embed.add_field(name='!OWS [빠른대전 or 경쟁전] [배틀태그]', value='해당 배틀태그 계정의 스탯을 보여준다.', inline=False)
-  embed.set_footer(text='Bot made by. 빨강고양이#5278', icon_url=developerImg)
+  embed.set_footer(text=footerMsg, icon_url=developerImg)
   await ctx.send(embed=embed)
 
 @bot.command()
@@ -106,7 +105,7 @@ async def 급식(ctx):
   embed.add_field(name='!포철공고 급식', value='포철공고 하루 급식을 보여준다.', inline=False)
   embed.add_field(name='!두원공고 급식', value='두원공고 하루 급식을 보여준다.', inline=False)
   embed.add_field(name='!경북외고 급식', value='경북외고 하루 급식을 보여준다.', inline=False)
-  embed.set_footer(text='Bot made by. 빨강고양이#5278', icon_url=developerImg)
+  embed.set_footer(text=footerMsg, icon_url=developerImg)
 
 #################### 급식 조회 명령어 ####################
 
@@ -302,19 +301,19 @@ async def 경북외고(ctx, *, schoolMeal):
 
 @bot.command(aliases=['PC', 'pc', 'Pc'])
 async def HyperScapePC(ctx, *, playerNickname):
-  Embed = GameRecordSearch.HyperScapeRecordSearch.HyperScapeRecordSearchPC(playerNickname)
+  Embed = HRS.HyperScapeRecordSearchPC(playerNickname)
 
   await ctx.send(embed=Embed.embed)
 
 @bot.command(aliases=['PS4', 'ps4', 'Ps4'])
 async def HyperScapePS4(ctx, *, playerNickname):
-  Embed = GameRecordSearch.HyperScapeRecordSearch.HyperScapeRecordSearchPS4(playerNickname)
+  Embed = HRS.HyperScapeRecordSearchPS4(playerNickname)
 
   await ctx.send(embed=Embed.embed)
 
 @bot.command(aliases=['XBOX', 'Xbox', 'XBox'])
 async def HyperScapeXBOX(ctx, *, playerNickname):
-  Embed = GameRecordSearch.HyperScapeRecordSearch.HyperScapeRecordSearchXBOX(playerNickname)
+  Embed = HRS.HyperScapeRecordSearchXBOX(playerNickname)
 
   await ctx.send(embed=Embed.embed)
 
@@ -324,25 +323,25 @@ Game = ['빠른대전', '경쟁전']
 
 @bot.command(aliases=['OWP'])
 async def OverwatchProfile(ctx, *, playerNickname):
-  Embed = GameRecordSearch.OverwatchRecordSearch.ProfileSearch(playerNickname)
+  Embed = ORS.ProfileSearch(playerNickname)
   await ctx.send(embed=Embed.embed)
 
 @bot.command(aliases=['OWS'])
 async def OverwatchStats(ctx, gameMode, playerNickname):
   if gameMode == Game[0]:
-    Embed = GameRecordSearch.OverwatchRecordSearch.quick(playerNickname)
+    Embed = ORS.quick(playerNickname)
     await ctx.send(embed=Embed.embed)
 
   elif gameMode == Game[1]:
-    Embed = GameRecordSearch.OverwatchRecordSearch.competitive(playerNickname)
+    Embed = ORS.competitive(playerNickname)
     await ctx.send(embed=Embed.embed)
 
 #################### League of Legends 전적 검색 명령어 ####################
 
 @bot.command(aliases=['롤'])
 async def LOLStats(ctx, *, playerNickname):
-  Embed = GameRecordSearch.LoLRecordSearch.LoLRecordSearch(playerNickname)
-  await ctx.send(embed=Embed.Search(playerNickname))
+  Embed = LRS.LoLRecordSearch(playerNickname)
+  await ctx.send(embed=Embed.embed)
 
 #################### Game ####################
 
@@ -358,7 +357,7 @@ async def 제작자(ctx):        # 자신의 정보를 넣으면 된다.
   embed.add_field(name="Facebook", value="[제작자의 Facebook](https://www.facebook.com/Junhong04/)", inline=False)
   embed.add_field(name="Instargram", value="[제작자의 Instargram](https://www.instagram.com/junhong936/)", inline=False)
   embed.add_field(name="Blog", value="[제작자의 Blog](https://dev-redcat.tistory.com/)", inline=False)
-  embed.set_footer(text='Bot made by. 빨강고양이#5278', icon_url=developerImg)
+  embed.set_footer(text=footerMsg, icon_url=developerImg)
   await ctx.send(embed=embed)
 
 @bot.command(aliases=['안녕', '안녕하세요', 'ㅎㅇ'])
@@ -369,7 +368,7 @@ async def Hello(ctx):
 async def 초대링크(ctx):
   embed = discord.Embed(title="봇 초대 링크", color=Color)
   embed.add_field(name="이 봇을 다른 서버에 초대하기 위한 링크입니다.", value="[봇 초대하기](https://discord.com/api/oauth2/authorize?client_id=793085952254803988&permissions=8&scope=bot)", inline=False)
-  embed.set_footer(text="Bot made by. 빨강고양이#5278", icon_url=developerImg)
+  embed.set_footer(text=footerMsg, icon_url=developerImg)
   await ctx.send(embed=embed)
 
 @bot.command()
@@ -399,7 +398,7 @@ async def Announcement(ctx, *, notice):
 
   if i is True:
     embed = discord.Embed(title="**Hotplace 공지사항**", description="공지사항은 항상 잘 숙지 해주시기 바랍니다.\n――――――――――――――――――――――――――――\n\n{}\n\n――――――――――――――――――――――――――――".format(notice), color=Color)
-    embed.set_footer(text="Bot made by. 빨강고양이#5278 | 담당 관리자: {}".format(ctx.author), icon_url=developerImg)
+    embed.set_footer(text=footerMsg + " | 담당 관리자: {}".format(ctx.author), icon_url=developerImg)
     await channel.send(embed=embed)
     await ctx.send("```**[ BOT 자동 알림 ]** | 정상적으로 공지가 채널에 작성이 완료되었습니다 : )\n\n[ 기본 작성 설정 채널 ] : {}\n[ 공지 발신자 ] : {}\n\n[ 내용 ]\n{}```".format(channel, ctx.author, notice))
 
