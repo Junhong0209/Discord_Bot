@@ -9,3 +9,8 @@ def get_time_tomorrow():
   date = datetime.today() + timedelta(1)    # 내일 날짜 받아오기 (yyyy-mm-dd HH:mm:ss)
   tomorrow = date.strftime('%y%m%d')        # date를 yyyymmdd 형태로 바꾸어줌
   return tomorrow
+
+def get_time():
+  date = datetime.today()
+  date = date.strftime('%y-%m-%d %H:%M:%S')
+  return date
