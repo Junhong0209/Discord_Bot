@@ -46,7 +46,7 @@ developerImg = image.icon
 @bot.event
 async def on_ready():
   try:
-    f = open('BotLog.txt', 'w')
+    f = open('BotLog.txt', 'a')
     print(f'Loggend-in Bot: {bot.user.name}\nBot id: {bot.user.id}\nconnection was succesful\n' + time.get_time() + '\n' + '=' * 30)
     f.write(f'Loggend-in Bot: {bot.user.name}\nBot id: {bot.user.id}\nconnection was succesful\n' + time.get_time() + '\n' + '=' * 30)
     f.close()
@@ -68,7 +68,7 @@ async def on_ready():
       await bot.change_presence(status=discord.Status.online, activity=game)
       await asyncio.sleep(3)
   except ConnectionResetError:
-    f = open('BotLog.txt', 'w')
+    f = open('BotLog.txt', 'a')
     print('\nLog out Bot\nConnection Reset Error.\nRestart Please.\n' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.write('\nLog out Bot\nConnection Reset Error.\nRestart Please.\n' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.close()
