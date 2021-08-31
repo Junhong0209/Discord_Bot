@@ -1,0 +1,55 @@
+Loggend-in Bot: �Ƽ�
+Bot id: 793085952254803988
+connection was succesful
+21-08-30 08:17:24
+==============================
+Log out Bot
+Connection Reset Error.
+Restart Please.
+21-08-30 09:33:18
+==============================
+Loggend-in Bot: �Ƽ�
+Bot id: 793085952254803988
+connection was succesful
+21-08-30 09:33:24
+==============================
+Log out Bot
+Connection Reset Error.
+Restart Please.
+21-08-30 10:31:34
+==============================
+Loggend-in Bot: �Ƽ�
+Bot id: 793085952254803988
+connection was succesful
+21-08-30 10:31:39
+==============================
+Log out Bot
+Connection Reset Error.
+Restart Please.
+21-08-30 10:37:54
+==============================
+Loggend-in Bot: �Ƽ�
+Bot id: 793085952254803988
+connection was succesful
+21-08-30 13:15:10
+==============================
+Log out Bot
+Connection Reset Error.
+Restart Please.
+21-08-30 20:53:23
+==============================
+Loggend-in Bot: �Ƽ�
+Bot id: 793085952254803988
+connection was succesful
+21-08-31 08:16:02
+==============================
+Log out Bot
+Connection Reset Error.
+Restart Please.
+21-08-31 08:53:53
+==============================
+Loggend-in Bot: �Ƽ�
+Bot id: 793085952254803988
+connection was succesful
+21-08-31 08:54:01
+==============================
