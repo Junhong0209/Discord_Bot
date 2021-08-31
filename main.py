@@ -47,8 +47,8 @@ developerImg = image.icon
 async def on_ready():
   try:
     f = open('BotLog.txt', 'a')
-    print(f'Loggend-in Bot: {bot.user.name}\nBot id: {bot.user.id}\nconnection was succesful\n' + time.get_time() + '\n' + '=' * 30)
-    f.write(f'Loggend-in Bot: {bot.user.name}\nBot id: {bot.user.id}\nconnection was succesful\n' + time.get_time() + '\n' + '=' * 30)
+    print(f'Loggend-in Bot: {bot.user.name}\nBot id: {bot.user.id}\nconnection was succesful\n' + time.get_time() + '\n' + '=' * 30 + '\n')
+    f.write(f'Loggend-in Bot: {bot.user.name}\nBot id: {bot.user.id}\nconnection was succesful\n' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.close()
     
     game = discord.Game('정신차리기')
@@ -71,6 +71,11 @@ async def on_ready():
     f = open('BotLog.txt', 'a')
     print('\nLog out Bot\nConnection Reset Error.\nRestart Please.\n' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.write('\nLog out Bot\nConnection Reset Error.\nRestart Please.\n' + time.get_time() + '\n' + '=' * 30 + '\n')
+    f.close()
+  except RuntimeError:
+    f = open('BotLog.txt', 'a')
+    print('\nClosed Bot\nBot is disconnect.\nDesconnection was succesful' + time.get_time() + '\n' + '=' * 30 + '\n')
+    f.write('\nClosed Bot\nBot is disconnect.\nDesconnection was succesful' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.close()
 
 
