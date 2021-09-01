@@ -53,3 +53,13 @@ Bot id: 793085952254803988
 connection was succesful
 21-08-31 08:54:01
 ==============================
+Loggend-in Bot: ï¿½Æ¼ï¿½
+Bot id: 793085952254803988
+connection was succesful
+21-09-01 08:52:42
+==============================
+Loggend-in Bot: ¾Æ¼­
+Bot id: 793085952254803988
+connection was succesful
+21-09-01 09:05:43
+==============================

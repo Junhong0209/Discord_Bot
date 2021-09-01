@@ -14,7 +14,6 @@ from SchoolMeal import schoolLogo as logo
 ########## 전적 검색용 파일 ##########
 from GameRecordSearch import HyperScapeRecordSearch as HRS
 from GameRecordSearch import OverwatchRecordSearch as ORS
-from GameRecordSearch import LoLRecordSearch as LRS
 
 ########## 임베드 Footer 글 ##########
 footerMsg = config.FooterMsg
@@ -69,13 +68,13 @@ async def on_ready():
       await asyncio.sleep(3)
   except ConnectionResetError:
     f = open('BotLog.txt', 'a')
-    print('\nLog out Bot\nConnection Reset Error.\nRestart Please.\n' + time.get_time() + '\n' + '=' * 30 + '\n')
-    f.write('\nLog out Bot\nConnection Reset Error.\nRestart Please.\n' + time.get_time() + '\n' + '=' * 30 + '\n')
+    print('Log out Bot\nConnection Reset Error.\nRestart Please.\n' + time.get_time() + '\n' + '=' * 30 + '\n')
+    f.write('Log out Bot\nConnection Reset Error.\nRestart Please.\n' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.close()
   except RuntimeError:
     f = open('BotLog.txt', 'a')
-    print('\nClosed Bot\nBot is disconnect.\nDesconnection was succesful' + time.get_time() + '\n' + '=' * 30 + '\n')
-    f.write('\nClosed Bot\nBot is disconnect.\nDesconnection was succesful' + time.get_time() + '\n' + '=' * 30 + '\n')
+    print('Closed Bot\nBot is disconnect.\nDesconnection was succesful' + time.get_time() + '\n' + '=' * 30 + '\n')
+    f.write('Closed Bot\nBot is disconnect.\nDesconnection was succesful' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.close()
 
 
@@ -378,14 +377,6 @@ async def OverwatchStats(ctx, gameMode, playerNickname):
   elif gameMode == Game[1]:
     Embed = ORS.competitive(playerNickname)
     await ctx.send(embed=Embed.embed)
-
-
-#################### League of Legends 전적 검색 명령어 ####################
-
-@bot.command(aliases=['롤'])
-async def LOLStats(ctx, *, playerNickname):
-  Embed = LRS.LoLRecordSearch(playerNickname)
-  await ctx.send(embed=Embed.embed)
 
 
 #################### 명령어 ####################
