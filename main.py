@@ -45,7 +45,11 @@ developerImg = image.icon
 @bot.event
 async def on_ready():
   try:
-    f = open('BotLog.txt', 'a')
+    try:
+      f = open('BotLog.txt', 'a', encoding='utf-8')
+    except FileNotFoundError:
+      f = open('BotLog.txt', 'w', encoding='utf-8')
+      
     print(f'Loggend-in Bot: {bot.user.name}\nBot id: {bot.user.id}\nconnection was succesful\n' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.write(f'Loggend-in Bot: {bot.user.name}\nBot id: {bot.user.id}\nconnection was succesful\n' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.close()
@@ -67,14 +71,9 @@ async def on_ready():
       await bot.change_presence(status=discord.Status.online, activity=game)
       await asyncio.sleep(3)
   except ConnectionResetError:
-    f = open('BotLog.txt', 'a')
+    f = open('BotLog.txt', 'a', encoding='utf-8')
     print('Log out Bot\nConnection Reset Error.\nRestart Please.\n' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.write('Log out Bot\nConnection Reset Error.\nRestart Please.\n' + time.get_time() + '\n' + '=' * 30 + '\n')
-    f.close()
-  except RuntimeError:
-    f = open('BotLog.txt', 'a')
-    print('Closed Bot\nBot is disconnect.\nDesconnection was succesful' + time.get_time() + '\n' + '=' * 30 + '\n')
-    f.write('Closed Bot\nBot is disconnect.\nDesconnection was succesful' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.close()
 
 
