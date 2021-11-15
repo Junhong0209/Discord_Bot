@@ -49,11 +49,11 @@ async def on_ready():
       f = open('BotLog.txt', 'a', encoding='utf-8')
     except FileNotFoundError:
       f = open('BotLog.txt', 'w', encoding='utf-8')
-      
+
     print(f'Loggend-in Bot: {bot.user.name}\nBot id: {bot.user.id}\nconnection was succesful\n' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.write(f'Loggend-in Bot: {bot.user.name}\nBot id: {bot.user.id}\nconnection was succesful\n' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.close()
-    
+
     game = discord.Game('정신차리기')
     await bot.change_presence(status=discord.Status.idle, activity=game)
     await asyncio.sleep(5)
@@ -76,7 +76,6 @@ async def on_ready():
     f.write('Log out Bot\nConnection Reset Error.\nRestart Please.\n' + time.get_time() + '\n' + '=' * 30 + '\n')
     f.close()
 
-
 #################### 도움말 명령어 ####################
 
 @bot.command()
@@ -97,7 +96,6 @@ async def 도움말(ctx):
   embed.set_footer(text=footerMsg, icon_url=developerImg)
   await ctx.send(embed=embed)
 
-
 @bot.command()
 async def 급식(ctx):
   embed = discord.Embed(title='급식 도움말', color=Color)
@@ -113,28 +111,23 @@ async def 급식(ctx):
   embed.set_footer(text=footerMsg, icon_url=developerImg)
   await ctx.send(embed=embed)
 
-
 #################### 급식 조회 명령어 ####################
 
 SchoolMeal = ['급식', '내일 급식', '내일급식']
-
 
 @bot.command()
 async def 대소고(ctx, *, schoolMeal):
   today = time.get_time_today()
   tomorrow = time.get_time_tomorrow()
-  
+
   if schoolMeal == SchoolMeal[0]:
     Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('D10', '7240454', today), DGSWLogo, '대소고')
     await ctx.send(embed=Embed.embed)
-  
   elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
     Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('D10', '7240454', tomorrow), DGSWLogo, '대소고')
     await ctx.send(embed=Embed.embed)
-  
   else:
     await ctx.send(embed=schoolMeal.Error())
-
 
 @bot.command()
 async def 문화고(ctx, *, schoolMeal):
@@ -144,49 +137,38 @@ async def 문화고(ctx, *, schoolMeal):
   if schoolMeal == SchoolMeal[0]:
     Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750172', today), MoonhwaLogo, '문화고')
     await ctx.send(embed=Embed.embed)
-  
   elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-    Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750172', tomorrow), MoonhwaLogo,
-                                           '문화고')
+    Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750172', tomorrow), MoonhwaLogo, '문화고')
     await ctx.send(embed=Embed.embed)
-  
   else:
     await ctx.send(embed=schoolMeal.Error())
-
 
 @bot.command(aliases=['문급'])
 async def MonnhwaSchoolMeal_Today(ctx):
   today = time.get_time_today()
-  
   Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750172', today), MoonhwaLogo, '문화고')
   await ctx.send(embed=Embed.embed)
-
 
 @bot.command(aliases=['문급내', '문내급'])
 async def MonnhwaSchoolMeal_Tomorrow(ctx):
   tomorrow = time.get_time_tomorrow()
-  
-  Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750172', tomorrow), MoonhwaLogo,
-                                         '문화고')
-  await ctx.send(embed=Embed.embed)
 
+  Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750172', tomorrow), MoonhwaLogo, '문화고')
+  await ctx.send(embed=Embed.embed)
 
 @bot.command()
 async def 예일고(ctx, *, schoolMeal):
   today = time.get_time_today()
   tomorrow = time.get_time_tomorrow()
-  
+
   if schoolMeal == SchoolMeal[0]:
     Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750772', today), YaleLogo, '예일고')
     await ctx.send(embed=Embed.embed)
-  
   elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
     Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750772', tomorrow), YaleLogo, '예일고')
     await ctx.send(embed=Embed.embed)
-  
   else:
     await ctx.send(embed=schoolMeal.Error())
-
 
 @bot.command(aliases=['예급'])
 async def YaleSchoolMeal_Today(ctx):
@@ -195,14 +177,12 @@ async def YaleSchoolMeal_Today(ctx):
   Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750772', today), YaleLogo, '예일고')
   await ctx.send(embed=Embed.embed)
 
-
 @bot.command(aliases=['예급내', '예내급'])
 async def YaleSchoolMeal_Tomorrow(ctx):
   tomorrow = time.get_time_tomorrow()
   
   Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750772', tomorrow), YaleLogo, '예일고')
   await ctx.send(embed=Embed.embed)
-
 
 @bot.command()
 async def 계림고(ctx, *, schoolMeal):
@@ -212,15 +192,12 @@ async def 계림고(ctx, *, schoolMeal):
   if schoolMeal == SchoolMeal[0]:
     Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750083', today), GyerimLogo, '계림고')
     await ctx.send(embed=Embed.embed)
-  
   elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
     Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750083', tomorrow), GyerimLogo,
                                            '계림고')
     await ctx.send(embed=Embed.embed)
-  
   else:
     await ctx.send(embed=schoolMeal.Error())
-
 
 @bot.command()
 async def 동성고(ctx, *, schoolMeal):
@@ -230,15 +207,11 @@ async def 동성고(ctx, *, schoolMeal):
   if schoolMeal == SchoolMeal[0]:
     Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750542', today), DongsugLogo, '동성고')
     await ctx.send(embed=Embed.embed)
-  
   elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-    Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750542', tomorrow), DongsugLogo,
-                                           '동성고')
+    Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750542', tomorrow), DongsugLogo, '동성고')
     await ctx.send(embed=Embed.embed)
-  
   else:
     await ctx.send(embed=schoolMeal.Error())
-
 
 @bot.command(aliases=['동급'])
 async def DongsungMeal_Today(ctx):
@@ -247,15 +220,12 @@ async def DongsungMeal_Today(ctx):
   Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750542', today), DongsugLogo, '동성고')
   await ctx.send(embed=Embed.embed)
 
-
 @bot.command(aliases=['동내급', '동급내'])
 async def DongsugMeal_Tomorrow(ctx):
   tomorrow = time.get_time_tomorrow()
   
-  Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750542', tomorrow), DongsugLogo,
-                                         '동성고')
+  Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750542', tomorrow), DongsugLogo, '동성고')
   await ctx.send(embed=Embed.embed)
-
 
 @bot.command()
 async def 신라공고(ctx, *, schoolMeal):
@@ -263,18 +233,13 @@ async def 신라공고(ctx, *, schoolMeal):
   tomorrow = time.get_time_tomorrow()
   
   if schoolMeal == SchoolMeal[0]:
-    Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750323', today), SillaTachnicalLogo,
-                                        '신라공고')
+    Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750323', today), SillaTachnicalLogo, '신라공고')
     await ctx.send(embed=Embed.embed)
-  
   elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-    Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750323', tomorrow),
-                                           SillaTachnicalLogo, '신라공고')
+    Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750323', tomorrow), SillaTachnicalLogo, '신라공고')
     await ctx.send(embed=Embed.embed)
-  
   else:
     await ctx.send(embed=schoolMeal.Error())
-
 
 @bot.command()
 async def 포철공고(ctx, *, schoolMeal):
@@ -282,18 +247,13 @@ async def 포철공고(ctx, *, schoolMeal):
   tomorrow = time.get_time_tomorrow()
   
   if schoolMeal == SchoolMeal[0]:
-    Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750337', today),
-                                        PohangJecheolTachnicalLogo, '포철공고')
+    Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750337', today), PohangJecheolTachnicalLogo, '포철공고')
     await ctx.send(embed=Embed.embed)
-  
   elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-    Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750337', tomorrow),
-                                           PohangJecheolTachnicalLogo, '포철공고')
+    Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750337', tomorrow), PohangJecheolTachnicalLogo, '포철공고')
     await ctx.send(embed=Embed.embed)
-  
   else:
     await ctx.send(embed=schoolMeal.Error())
-
 
 @bot.command()
 async def 두원공고(ctx, *, schoolMeal):
@@ -301,18 +261,13 @@ async def 두원공고(ctx, *, schoolMeal):
   tomorrow = time.get_time_tomorrow()
   
   if schoolMeal == SchoolMeal[0]:
-    Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('J10', '7531257', today), DoowonTachnicalLogo,
-                                        '두원공고')
+    Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('J10', '7531257', today), DoowonTachnicalLogo, '두원공고')
     await ctx.send(embed=Embed.embed)
-  
   elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-    Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('J10', '7531257', tomorrow),
-                                           DoowonTachnicalLogo, '두원공고')
+    Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('J10', '7531257', tomorrow), DoowonTachnicalLogo, '두원공고')
     await ctx.send(embed=Embed.embed)
-  
   else:
     await ctx.send(embed=schoolMeal.Error())
-
 
 @bot.command()
 async def 경북외고(ctx, *, schoolMeal):
@@ -320,15 +275,11 @@ async def 경북외고(ctx, *, schoolMeal):
   tomorrow = time.get_time_tomorrow()
   
   if schoolMeal == SchoolMeal[0]:
-    Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750079', today), ForeignLanguageLogo,
-                                        '경북외고')
+    Embed = getSchoolMeal.getMeal_today(getSchoolMeal.schoolInformation('R10', '8750079', today), ForeignLanguageLogo, '경북외고')
     await ctx.send(embed=Embed.embed)
-  
   elif schoolMeal == SchoolMeal[1] or schoolMeal == SchoolMeal[2]:
-    Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750079', tomorrow),
-                                           ForeignLanguageLogo, '경북외고')
+    Embed = getSchoolMeal.getMeal_tomorrow(getSchoolMeal.schoolInformation('R10', '8750079', tomorrow), ForeignLanguageLogo, '경북외고')
     await ctx.send(embed=Embed.embed)
-  
   else:
     await ctx.send(embed=schoolMeal.Error())
 
@@ -338,45 +289,35 @@ async def 경북외고(ctx, *, schoolMeal):
 @bot.command(aliases=['PC', 'pc', 'Pc'])
 async def HyperScapePC(ctx, *, playerNickname):
   Embed = HRS.HyperScapeRecordSearchPC(playerNickname)
-  
   await ctx.send(embed=Embed.embed)
-
 
 @bot.command(aliases=['PS4', 'ps4', 'Ps4'])
 async def HyperScapePS4(ctx, *, playerNickname):
   Embed = HRS.HyperScapeRecordSearchPS4(playerNickname)
-  
   await ctx.send(embed=Embed.embed)
-
 
 @bot.command(aliases=['XBOX', 'Xbox', 'XBox'])
 async def HyperScapeXBOX(ctx, *, playerNickname):
   Embed = HRS.HyperScapeRecordSearchXBOX(playerNickname)
-  
   await ctx.send(embed=Embed.embed)
-
 
 #################### Overwatch 전적 검색 명령어 ####################
 
 Game = ['빠른대전', '경쟁전']
-
 
 @bot.command(aliases=['OWP'])
 async def OverwatchProfile(ctx, *, playerNickname):
   Embed = ORS.ProfileSearch(playerNickname)
   await ctx.send(embed=Embed.embed)
 
-
 @bot.command(aliases=['OWS'])
 async def OverwatchStats(ctx, gameMode, playerNickname):
   if gameMode == Game[0]:
     Embed = ORS.quick(playerNickname)
     await ctx.send(embed=Embed.embed)
-  
   elif gameMode == Game[1]:
     Embed = ORS.competitive(playerNickname)
     await ctx.send(embed=Embed.embed)
-
 
 #################### 명령어 ####################
 
@@ -391,18 +332,14 @@ async def 제작자(ctx):  # 자신의 정보를 넣으면 된다.
   embed.set_footer(text=footerMsg, icon_url=developerImg)
   await ctx.send(embed=embed)
 
-
 @bot.command(aliases=['안녕', '안녕하세요', 'ㅎㅇ'])
 async def Hello(ctx):
   await ctx.send('안녕하세요~! {}님. 오늘도 좋은 하루 보내세요!'.format(ctx.author.mention))
 
-
 @bot.command()
 async def 초대링크(ctx):
   embed = discord.Embed(title="봇 초대 링크", color=Color)
-  embed.add_field(name="이 봇을 다른 서버에 초대하기 위한 링크입니다.",
-                  value="[봇 초대하기](https://discord.com/api/oauth2/authorize?client_id=793085952254803988&permissions=8&scope=bot)",
-                  inline=False)
+  embed.add_field(name="이 봇을 다른 서버에 초대하기 위한 링크입니다.", value="[봇 초대하기](https://discord.com/api/oauth2/authorize?client_id=793085952254803988&permissions=8&scope=bot)", inline=False)
   embed.set_footer(text=footerMsg, icon_url=developerImg)
   await ctx.send(embed=embed)
 
@@ -416,7 +353,6 @@ async def 빡추(ctx, *, text=None):
   else:
     await ctx.send("보셨나요? 보셨나요? 보셨냐구요!!!! " + text + "의 빡추 스탯쌓기!!")
 
-
 @bot.command(name='관리자')
 async def is_mange_messages(ctx):
   if ctx.guild:
@@ -427,25 +363,21 @@ async def is_mange_messages(ctx):
   else:
     await ctx.send('DM으론 불가능합니다.')
 
-
 @bot.command(name='공지작성')
 async def Announcement(ctx, *, notice):
   i = ctx.message.author.guild_permissions.administrator
   # Discord 에서 개발자 모드를 켜서 채널의 ID를 가져와 넣는다.
   channel = ctx.guild.get_channel(844527701300609044)  # 메시지를 보낼 채널 설정
-  
+
   if i is True:
-    embed = discord.Embed(title="**Hotplace 공지사항**",
-                          description="공지사항은 항상 잘 숙지 해주시기 바랍니다.\n――――――――――――――――――――――――――――\n\n{}\n\n――――――――――――――――――――――――――――".format(
-                            notice), color=Color)
+    embed = discord.Embed(title="**Hotplace 공지사항**", description="공지사항은 항상 잘 숙지 해주시기 바랍니다.\n――――――――――――――――――――――――――――\n\n{}\n\n――――――――――――――――――――――――――――".format(notice), color=Color)
     embed.set_footer(text=footerMsg + " | 담당 관리자: {}".format(ctx.author), icon_url=developerImg)
     await channel.send(embed=embed)
     await ctx.send(
       "```**[ BOT 자동 알림 ]** | 정상적으로 공지가 채널에 작성이 완료되었습니다 : )\n\n[ 기본 작성 설정 채널 ] : {}\n[ 공지 발신자 ] : {}\n\n[ 내용 ]\n{}```".format(
         channel, ctx.author, notice))
-  
+
   if i is False:
     await ctx.send("{}님, 당신은 관리자가 아닙니다".format(ctx.author.mention))
-
 
 bot.run(token)

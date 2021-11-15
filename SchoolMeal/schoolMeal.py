@@ -1,6 +1,8 @@
 ########## 외부 라이브러리 ##########
 import requests
 import discord
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 ########## 다른 파이썬 파일 ##########
 from config import Config as config
@@ -17,6 +19,7 @@ footerMsg = config.FooterMsg
 
 ########### Image ###########
 developerImg = image.icon
+
 
 def Error():
   embed = discord.Embed(title='Error', color=ErrorColor)
@@ -45,7 +48,7 @@ class getSchoolMeal:
     self.embed = discord.Embed(title=schoolName + ' 급식 (' + self.date + ')', color=Color)
     self.embed.set_thumbnail(url=self.thumbnail)
 
-    self.r = requests.get(self.url, params=params)
+    self.r = requests.get(self.url, params=params, verify=False)
     self.j = self.r.json()
 
     self.parseJson()
