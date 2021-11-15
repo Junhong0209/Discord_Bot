@@ -2023,3 +2023,8 @@ Connection Reset Error.
 Restart Please.
 21-11-15 11:01:00
 ==============================
+Loggend-in Bot: 아서
+Bot id: 793085952254803988
+connection was succesful
+21-11-15 14:16:26
+==============================
