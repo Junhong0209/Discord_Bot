@@ -19,6 +19,12 @@ class Time:
     return date
 
 
+class BS4:
+  Protocol = 'https://'
+  Headers = ''
+  Cookies = ''
+
+
 class ColorPalette:
   main_color = 0x2EFEF7
   error_color = 0xFF0000
