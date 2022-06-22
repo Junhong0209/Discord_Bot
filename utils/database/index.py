@@ -1,2 +1,2 @@
-class Main:
+class Index:
   prefix = ';'
