@@ -3,7 +3,7 @@ import re
 import discord
 import requests
 
-from utils.config.main import Config, ColorPalette
+from utils.database.config import Config, ColorPalette
 from utils.image.main import Image
 
 dev_icon = Image.icon
