@@ -1,16 +1,17 @@
 import os
+import random
 import discord
 
 from discord.ext import commands
-from utils.config.main import ColorPalette, Config
+from utils.database.config import ColorPalette, Config
 from utils.image.main import Image
-from utils.database.main import Main
+from utils.database.index import Index
 
 color = ColorPalette.main_color
 ErrorColor = ColorPalette.error_color
 msg = Config.footer_msg
 icon = Image.icon
-prefix = Main.prefix
+prefix = Index.prefix
 
 
 class Core(commands.Cog, name='기본'):
@@ -62,6 +63,33 @@ class Core(commands.Cog, name='기본'):
       embed.set_footer(text=msg, icon_url=icon)
       await ctx.send(embed=embed)
 
+  @commands.command(name='오늘뭐먹지', help='랜덤으로 음식을 추천해줍니다. 음식 추가는 하나씩만 가능합니다.', usage=f'{prefix}오늘뭐먹지 / {prefix}오늘뭐먹지 추가 [음식 이름] / {prefix}오늘뭐먹지 리스트')
+  async def what_should_i_eat_today(self, ctx, type=None, meal_name=None):
+    if type is None and meal_name is None:
+      try:
+        f = open('Utils/Database/whatShouldIEatToday.txt', 'r', encoding='utf-8')
+        values = []
+        
+        for index, value in enumerate(f.read().split(',')):
+          values.append(value)
+        
+        random_number = random.randrange(0, len(values))
+        f.close()
+        
+        await ctx.send(f'오늘은 {values[random_number]}(이)가 어떠신가요??')
+      except FileNotFoundError:
+        await ctx.send('음식이 추가되어 있지않아요! 봇 개발자에게 말해 음식을 먼저 추가해주세요. :)')
+    elif type == '리스트':
+      try:
+        f = open('Utils/Database/whatShouldIEatToday.txt', 'r', encoding='utf-8')
+      except FileNotFoundError:
+        f = open('Utils/Database/whatShouldIEatToday.txt', 'r', encoding='utf-8')
+
+      embed = discord.Embed(title='음식 리스트', color=color)
+      for value in enumerate(f.read().split(',')):
+        embed.add_field(name=f'{value[0] + 1}', value=value[1], inline=True)
+      f.close()
+      await ctx.send(embed=embed)
 
   @commands.command(name='출력', help='출력을 합니다', usage=f'{prefix}출력')
   async def print_it(self, ctx):
@@ -76,7 +104,6 @@ class Core(commands.Cog, name='기본'):
     embed = discord.Embed(title='제작자 정보', color=color)
     embed.add_field(name='Discord', value='빨강고양이#5278', inline=False)
     embed.add_field(name='GitHub', value='[제작자의 GitHub](https://github.com/Junhong0209)', inline=False)
-    embed.add_field(name='Facebook', value='[제작자의 Facebook](https://www.facebook.com/Junhong04/)', inline=False)
     embed.add_field(name='Instagram', value='[제작자의 Instagram](https://www.instagram.com/Junhong936/)', inline=False)
     embed.add_field(name='Blog', value='[제작자의 Blog](https://dev-radcat.tistory.com/)', inline=False)
     embed.set_footer(text=msg, icon_url=icon)

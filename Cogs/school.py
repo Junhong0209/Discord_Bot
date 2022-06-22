@@ -2,9 +2,9 @@ from discord.ext import commands
 from utils.config.main import Time
 from utils.schoolMeal.school_meal import school_information, GetMealToday, GetMealTomorrow
 from utils.image.main import SchoolImage
-from utils.database.main import Main
+from utils.database.index import Index
 
-prefix = Main.prefix
+prefix = Index.prefix
 
 
 class School(commands.Cog, name='급식'):

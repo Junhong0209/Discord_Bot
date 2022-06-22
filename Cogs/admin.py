@@ -2,11 +2,11 @@ import discord
 import os.path
 
 from discord.ext import commands
-from utils.database.main import Main
-from utils.config.main import ColorPalette, Config
+from utils.database.index import Index
+from utils.database.config import ColorPalette, Config
 from utils.image.main import Image
 
-prefix = Main.prefix
+prefix = Index.prefix
 color = ColorPalette.main_color
 msg = Config.footer_msg
 icon = Image.icon
